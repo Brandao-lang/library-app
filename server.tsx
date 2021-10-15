@@ -9,13 +9,16 @@ const port = 5000
 //     res.sendFile(path.join(__dirname+'client/build/index.html'))
 // })
 
+
+
+//This endpoint is run when a book search is entered
 app.get('/fetchResults', async(request, response) => {
     const title = request.query.title
     const author = request.query.author
     const apiArr = []
 
      await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APIKEY}`)
-     .then((res: { data: { items: string | any[] } }) => {
+     .then(res => {
         const responseLength = res.data.items.length
         
         for (let i = 0; i < responseLength; i++) {
@@ -31,15 +34,13 @@ app.get('/fetchResults', async(request, response) => {
                 averageRating: bookRating,
                 imageLinks: bookImg,
                 publishedDate: bookPublished
-
-             })
+            })
         }
 
         response.status(200).send(apiArr)
     }).catch(err => {
         console.log(`GOOGLE API FAIL: ${err}`)
     })
-
 })
 
 
