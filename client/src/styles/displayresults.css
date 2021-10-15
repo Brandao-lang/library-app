@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px;
+}
+
+.row h3 {
+  width: 10%;
+}
+
+/* .row img:hover {
+  height: 14rem;
+  transition: 3s;
+} */

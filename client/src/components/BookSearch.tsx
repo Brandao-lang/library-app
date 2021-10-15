@@ -1,19 +1,17 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import '../styles/booksearch.css'
+import { HomePageState } from './Homepage'
 
 export interface BookSearchState {
     query: {
         title: string,
         author: string
-    },
-    results: {
-        bookTitle: string,
-        author: string,
-        averageRating: number,
-        imageLinks: string,
-        publishedDate: string
-    }[] 
+    }
+}
+
+interface BookSearchProps {
+    updateResults(data: HomePageState['results']):void
 }
 
 interface AxiosShape {
@@ -29,12 +27,12 @@ interface AxiosShape {
 }
 
 
-export default function BookSearch () {
+const BookSearch:React.FC<BookSearchProps> = (props) => {
     const [query, setQuery] = useState<BookSearchState['query']>({
         title: '',
         author: ''
     })
-    const [resultsArr, setResultsArr] = useState<BookSearchState['results']>([])
+    const [hasSearched, setHasSearched] = useState(false)
     
     const inputHandler = (e:any):void => {
         setQuery({
@@ -52,12 +50,8 @@ export default function BookSearch () {
                 author: query.author
             }
         }).then(res => {
-            const resultsLength = res.data.length
-            
-            for (let i = 0; i< resultsLength; i++) {
-                setResultsArr([...resultsArr, res.data[i]])
-            }
-            console.log(resultsArr)
+           setHasSearched(true)
+           props.updateResults(res.data)
 
         }).catch(err => {
             console.log(`SEARCH GET failed: ${err}`)
@@ -65,16 +59,15 @@ export default function BookSearch () {
     }
     
     return (
-        <div className='form-container'>
-            <form onSubmit={submitHandler} className='search-container'>
-                <h1>Enter a Title, Author, or Both.</h1>
+        <div className={!hasSearched ? 'form-container' : 'form-container-top'}>
+            <form onSubmit={submitHandler} className={!hasSearched ? 'search-container' : 'search-container-centered'}>
+                <h1 className={!hasSearched ? '' : 'hide-title'}>Enter a Title, Author, or Both.</h1>
                 <input
                     type='text'
                     name='title'
                     placeholder='Harry Potter...'
                     onChange={inputHandler}
                 />
-                <br/>
                 <input
                     type='text'
                     name='author'
@@ -87,3 +80,5 @@ export default function BookSearch () {
         </div>
     )
 }
+
+export default BookSearch
