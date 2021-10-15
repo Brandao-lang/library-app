@@ -1,0 +1,30 @@
+.form-container {
+  position: absolute;
+  top: 40%;
+  left: 36%;
+  margin-top: -40px;
+  margin-left: -36px;
+}
+
+.search-container {
+  width: 30vw;
+}
+
+.search-container input[type="text"] {
+  width: 70%;
+  margin: 10px;
+}
+
+.search-container button {
+  margin-top: 6%;
+}
+
+.login-signup-container {
+  position: absolute;
+  right: 0;
+}
+
+.signup,
+.login {
+  margin: 10px;
+}
