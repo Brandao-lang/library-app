@@ -6,6 +6,9 @@ export interface HomePageState {
     results: {
         bookTitle: string,
         author: string,
+        description: string,
+        pageCount: number,
+        publisher: string,
         averageRating: number,
         imageLinks: string,
         publishedDate: string
@@ -26,7 +29,7 @@ export default function Homepage() {
                 <button className='login'>Login</button>
             </div>
             <BookSearch updateResults={updateResults}/>
-            <DisplayResults resultsArr={resultsArr}/>
+            <DisplayResults resultsArr={resultsArr} />
         </div>
     )
 }
