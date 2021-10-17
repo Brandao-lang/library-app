@@ -11,10 +11,10 @@ interface DisplayResultsProps {
 const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
-
+    
     const bookSelect = (bookData:any):void => {
         dispatch({type:'book/SelectedBook', payload: bookData})
-        history.push('/info-page')
+        history.push('/details')
     }
 
     return (
@@ -22,13 +22,13 @@ const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
             {props.resultsArr.map((result, index) => {
                 return  <div key={index}>
                             <div className='row'>
-                               <img onClick={() => bookSelect(result)}src={result.imageLinks || 'N/A'} alt='cover-art' />
+                                <img onClick={() => bookSelect(result)}src={result.imageLinks || 'N/A'} alt='cover-art' />
                                 <h3>{result.bookTitle || 'N/A'}</h3>
                                 <h3>{result.author || 'N/A'}</h3>
                                 <h3>{result.averageRating || 'N/A'}</h3>
                                 <h3>{result.publishedDate || 'N/A'}</h3>
                             </div>
-                                <hr />
+                            <hr />
                         </div>
             })}
         </div>

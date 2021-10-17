@@ -17,20 +17,26 @@ app.get('/fetchResults', async(request, response) => {
     const author = request.query.author
     const apiArr = []
 
-     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APIKEY}`)
-     .then(res => {
+     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APIKEY}
+     `).then(res => {
         const responseLength = res.data.items.length
         
         for (let i = 0; i < responseLength; i++) {
             const bookName = res.data.items[i].volumeInfo.title
             const bookAuthor = res.data.items[i].volumeInfo.authors
+            const bookDescription = res.data.items[i].volumeInfo.description
+            const bookPageCount = res.data.items[i].volumeInfo.pageCount
+            const bookPublisher = res.data.items[i].volumeInfo.publisher
             const bookRating = res.data.items[i].volumeInfo.averageRating
             const bookImg = res.data.items[i].volumeInfo.imageLinks.smallThumbnail 
             const bookPublished = res.data.items[i].volumeInfo.publishedDate
 
             apiArr.push({
                 bookTitle: bookName, 
-                author: bookAuthor, 
+                author: bookAuthor,
+                description: bookDescription,
+                pageCount: bookPageCount,
+                publisher: bookPublisher, 
                 averageRating: bookRating,
                 imageLinks: bookImg,
                 publishedDate: bookPublished

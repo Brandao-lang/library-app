@@ -29,14 +29,13 @@ interface AxiosShape {
     length: number
 }
 
-
 const BookSearch:React.FC<BookSearchProps> = (props) => {
     const [query, setQuery] = useState<BookSearchState['query']>({
         title: '',
         author: ''
     })
     const [hasSearched, setHasSearched] = useState(false)
-    
+
     const inputHandler = (e:any):void => {
         setQuery({
             ...query,
@@ -60,7 +59,7 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
         }).then(res => {
            setHasSearched(true)
            props.updateResults(res.data)
-
+        
         }).catch(err => {
             console.log(`SEARCH GET failed: ${err}`)
         })
