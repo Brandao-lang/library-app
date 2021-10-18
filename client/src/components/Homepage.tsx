@@ -3,6 +3,7 @@ import BookSearch from './BookSearch'
 import DisplayResults from './DisplayResults'
 import {Switch, Route} from 'react-router-dom'
 import {useHistory} from 'react-router-dom'
+import BookPage from './BookPage'
 
 export interface HomePageState {
     results: {
@@ -19,7 +20,9 @@ export interface HomePageState {
 
 export default function Homepage() {
     const [resultsArr, setResultsArr] = useState<HomePageState['results']>([])
-   const history = useHistory()
+    
+    const history = useHistory()
+    
     const updateResults = (data: HomePageState['results']):void => {
         setResultsArr(data)
         history.push('/results')
@@ -31,12 +34,13 @@ export default function Homepage() {
                 <button className='signup'>Signup</button>
                 <button className='login'>Login</button>
             </div>
+            <BookSearch updateResults={updateResults}/>
             <Switch>
-                <Route path='/form'>
-                    <BookSearch updateResults={updateResults}/>
-                </Route>
-                <Route path='/results'>
+                <Route exact path='/results'>
                     <DisplayResults resultsArr={resultsArr} />
+                </Route>
+                <Route exact path='/details'>
+                    <BookPage />
                 </Route>
             </Switch>
         </div>

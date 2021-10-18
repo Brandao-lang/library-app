@@ -45,11 +45,6 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
 
     const submitHandler = async(e:any) => {
         e.preventDefault()
-
-        //delete this
-    //     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query.title}+inauthor:${query.author}&filter=ebooks&maxResults=40&key=AIzaSyAAlwcY5uO4t1n6OS9nTQl7ZQHz7cLGh40`)
-    //  .then(res => console.log(res.data))
-        //delete this
         
         axios.get<AxiosShape['data']>('/fetchResults', {
             params: {

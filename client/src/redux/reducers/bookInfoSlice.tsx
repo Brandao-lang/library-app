@@ -18,8 +18,6 @@ const initialState: bookInfoState = {
     pages: 0,
     image: 'N/A',
     description: 'N/A'
-
-    
 }
 
 export default function bookInfoSlice(state=initialState, action:any) {
