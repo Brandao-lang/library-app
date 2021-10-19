@@ -2,11 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/rootReducer'
 
-interface BookInfoProps {
-    title: string
-}
-
-const BookPage: React.FC<BookInfoProps> = (props) => {
+const BookPage = () => {
     const book = useSelector((state:RootState) => state.bookInfo)
 
     return (
