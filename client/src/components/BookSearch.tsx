@@ -24,7 +24,6 @@ interface AxiosShape {
         averageRating: number,
         imageLinks:string,
         publishedDate: string
-
     }>,
     length: number
 }

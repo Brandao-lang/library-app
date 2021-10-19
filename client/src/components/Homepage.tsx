@@ -19,23 +19,26 @@ export interface HomePageState {
 }
 
 export default function Homepage() {
-    const [resultsArr, setResultsArr] = useState<HomePageState['results']>([])
+    const [resultsArr, setResultsArr] = useState<HomePageState['results']>(JSON.parse(sessionStorage.getItem('searched')!) || [])
     
     const history = useHistory()
     
     const updateResults = (data: HomePageState['results']):void => {
         setResultsArr(data)
+        sessionStorage.setItem('searched', JSON.stringify(data))
         history.push('/results')
     }
-    
+
     return (
         <div className='home-container'>
             <div className='login-signup-container'>
                 <button className='signup'>Signup</button>
                 <button className='login'>Login</button>
             </div>
-            <BookSearch updateResults={updateResults}/>
             <Switch>
+                <Route exact path='/search'>
+                    <BookSearch updateResults={updateResults}/>
+                </Route>
                 <Route exact path='/results'>
                     <DisplayResults resultsArr={resultsArr} />
                 </Route>
