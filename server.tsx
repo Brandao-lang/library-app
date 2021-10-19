@@ -17,7 +17,7 @@ app.get('/fetchResults', async(request, response) => {
     const author = request.query.author
     const apiArr = []
 
-     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=AIzaSyAAlwcY5uO4t1n6OS9nTQl7ZQHz7cLGh40
+     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APIKEY}
      `).then(res => {
         const responseLength = res.data.items.length
         
