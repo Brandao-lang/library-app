@@ -35,10 +35,8 @@ export default function Homepage() {
                 <button className='signup'>Signup</button>
                 <button className='login'>Login</button>
             </div>
+            <BookSearch updateResults={updateResults}/>
             <Switch>
-                <Route exact path='/search'>
-                    <BookSearch updateResults={updateResults}/>
-                </Route>
                 <Route exact path='/results'>
                     <DisplayResults resultsArr={resultsArr} />
                 </Route>

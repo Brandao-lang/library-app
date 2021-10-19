@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router'
 import axios from 'axios'
-import React, { useState } from 'react'
 import '../styles/booksearch.css'
 import { HomePageState } from './Homepage'
 
@@ -29,6 +30,7 @@ interface AxiosShape {
 }
 
 const BookSearch:React.FC<BookSearchProps> = (props) => {
+    const location = useLocation()
     const [query, setQuery] = useState<BookSearchState['query']>({
         title: '',
         author: ''
@@ -58,6 +60,10 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
             console.log(`SEARCH GET failed: ${err}`)
         })
     }
+
+    useEffect(() => {
+        setHasSearched(location.pathname === '/' ? false : true)
+    },[setHasSearched, location.pathname],)
     
     return (
         <div className={!hasSearched ? 'form-container' : 'form-container-top'}>

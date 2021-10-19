@@ -19,7 +19,6 @@ const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
 
     return (
         <div>
-            <p>test</p>
             {props.resultsArr.map((result, index) => {
                 return  <div key={index}>
                             <div className='row'>
