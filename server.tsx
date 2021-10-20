@@ -11,35 +11,26 @@ const port = 5000
 
 
 
-//This endpoint is run when a book search is entered
+//This endpoint is run when a book search is entered, generates and returns an array of books retrieved from the API
 app.get('/fetchResults', async(request, response) => {
     const title = request.query.title
     const author = request.query.author
     const apiArr = []
 
-     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APIKEY}`
+     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.REACT_APP_APIKEY}`
      ).then(res => {
         const responseLength = res.data.items.length
         
         for (let i = 0; i < responseLength; i++) {
-            const bookName = res.data.items[i].volumeInfo.title
-            const bookAuthor = res.data.items[i].volumeInfo.authors
-            const bookDescription = res.data.items[i].volumeInfo.description
-            const bookPageCount = res.data.items[i].volumeInfo.pageCount
-            const bookPublisher = res.data.items[i].volumeInfo.publisher
-            const bookRating = res.data.items[i].volumeInfo.averageRating
-            const bookImg = res.data.items[i].volumeInfo.imageLinks.smallThumbnail 
-            const bookPublished = res.data.items[i].volumeInfo.publishedDate
-
             apiArr.push({
-                bookTitle: bookName, 
-                author: bookAuthor,
-                description: bookDescription,
-                pageCount: bookPageCount,
-                publisher: bookPublisher, 
-                averageRating: bookRating,
-                imageLinks: bookImg,
-                publishedDate: bookPublished
+                bookTitle: res.data.items[i].volumeInfo.title, 
+                author:  res.data.items[i].volumeInfo.authors,
+                description: res.data.items[i].volumeInfo.description,
+                pageCount: res.data.items[i].volumeInfo.pageCount,
+                publisher: res.data.items[i].volumeInfo.publisher, 
+                averageRating: res.data.items[i].volumeInfo.averageRating,
+                imageLinks: res.data.items[i].volumeInfo.imageLinks.smallThumbnail,
+                publishedDate: res.data.items[i].volumeInfo.publishedDate
             })
         }
 

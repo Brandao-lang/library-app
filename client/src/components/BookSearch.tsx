@@ -47,7 +47,7 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
     const submitHandler = async(e:any) => {
         e.preventDefault()
         
-        axios.get<AxiosShape['data']>('/fetchResults', {
+        await axios.get<AxiosShape['data']>('/fetchResults', {
             params: {
                 title: query.title,
                 author: query.author
@@ -68,18 +68,18 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
     return (
         <div className={!hasSearched ? 'form-container' : 'form-container-top'}>
             <form onSubmit={submitHandler} className={!hasSearched ? 'search-container' : 'search-container-centered'}>
-                <h1 className={!hasSearched ? '' : 'hide-title'}>Enter a Title, Author, or Both.</h1>
-                <input
-                    type='text'
-                    name='title'
-                    placeholder='Harry Potter...'
-                    onChange={inputHandler}
+               <h1 className={!hasSearched ? '' : 'hide-title'}>Enter a Title, Author, or Both.</h1>
+                <input className='form-control'
+                        type='text'
+                        name='title'
+                        placeholder='Harry Potter...'
+                        onChange={inputHandler}
                 />
-                <input
-                    type='text'
-                    name='author'
-                    placeholder='J.K Rowling...'
-                    onChange={inputHandler}
+                <input className='form-control'
+                        type='text'
+                        name='author'
+                        placeholder='J.K Rowling...'
+                        onChange={inputHandler}
                 />
                 <br/>
                 <button>Search</button>

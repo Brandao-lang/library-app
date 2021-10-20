@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import BookSearch from './BookSearch'
 import DisplayResults from './DisplayResults'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Link } from 'react-router-dom'
 import {useHistory} from 'react-router-dom'
 import BookPage from './BookPage'
 
@@ -32,15 +32,19 @@ export default function Homepage() {
     return (
         <div className='home-container'>
             <div className='login-signup-container'>
-                <button className='signup'>Signup</button>
+                <Link to='/signup'>
+                    <button className='/signup'>Signup</button>
+                </Link>
+                <Link to='/login'>
                 <button className='login'>Login</button>
+                </Link>
             </div>
             <BookSearch updateResults={updateResults}/>
             <Switch>
-                <Route exact path='/results'>
+                <Route path='/results'>
                     <DisplayResults resultsArr={resultsArr} />
                 </Route>
-                <Route exact path='/details'>
+                <Route path='/details'>
                     <BookPage />
                 </Route>
             </Switch>
