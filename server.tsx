@@ -1,14 +1,76 @@
+// import { runMain } from "module"
+
 const { default: axios } = require('axios')
 const express = require('express')
 const path = require("path")
+const { MongoClient } = require('mongodb')
 
 const app = express()
+app.use(express.json())
 const port = 5000
+const url =  `mongodb+srv://dbAdmin:${process.env.REACT_APP_PASS}@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
+const client = new MongoClient(url)
 
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname+'client/build/index.html'))
 // })
 
+app.post('/signup', async(request, response) => {
+    const { username, email, password } = request.body
+    
+    try {
+        await client.connect()
+        console.log('connected to database successfully')
+        const db = client.db('BOOK_CLUSTER')
+        const col = db.collection('users')
+
+        let userDocument = {
+            "name" : `${username}`,
+            "email" : `${email}`,
+            "password" : `${password}`
+        }
+
+        const p = await col.insertOne(userDocument)
+        const myDoc = await col.findOne({name: 'Steve'})
+        console.log(myDoc)
+
+    } catch (err) {
+        console.log(err.stack)
+    } finally {
+        await client.close()
+    }
+
+    response.status(200).send('user added to db')
+})
+
+app.get('/login', async(request, response) => {
+    const email = request.query.email
+    const password = request.query.password
+
+    try {
+        await client.connect()
+        console.log('connected to database successfully')
+        const db = client.db('BOOK_CLUSTER')
+        const col = db.collection('users')
+
+        const user = await col.findOne({
+            email: email,
+            password: password
+        })
+
+        if (!user) {
+            response.status(400).send('user not found')
+        }
+
+        console.log(user)
+        response.status(200).send(user)
+
+    } catch (err) {
+        console.log(`login api failed: ${err}`)
+    } finally {
+        client.close()
+    }
+})
 
 
 //This endpoint is run when a book search is entered, generates and returns an array of books retrieved from the API

@@ -1,0 +1,17 @@
+.sign-up-container {
+  position: absolute;
+  top: 40%;
+  left: 36%;
+  margin-top: -40px;
+  margin-left: -36px;
+}
+
+.signup-form {
+  width: 30vw;
+  margin: 0 auto;
+}
+
+.signup-form input[type="text"] {
+  width: 70%;
+  margin: 10px;
+}
