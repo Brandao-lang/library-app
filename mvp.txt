@@ -1,10 +1,10 @@
 SIMPLE BOOK PROJECT FEATURE LIST
 ------------------------
-1.) Home Page - search for books (no log-in required)
+1.) Home Page - search for books (no login required)
 2. ) Each book result can be interacted with to 
 	a.) Go to the purchase page on Google
-	b.) click on a 'deatils' button to view full synopsis
-	c.) save the book to your collection (log in required)
+	b.) click on a 'details' button to view full synopsis
+	c.) save the book to your collection (login required)
 3.) Once logged in user can go to their 'bookshelf' where they can organize their books
 4.) In the bookshelf users can keep track of their reading progess, view which books they are reading and which have been completed
 5.) Books can be organized by custom user-created categories or simply listed in alphabetical order by author or title 
