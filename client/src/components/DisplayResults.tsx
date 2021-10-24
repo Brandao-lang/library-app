@@ -14,23 +14,23 @@ const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
     
     const bookSelect = (bookData:any):void => {
         dispatch({type:'book/SelectedBook', payload: bookData})
-        history.push('/details')
+        history.push('/search/details')
     }
 
     return (
         <div>
-            {props.resultsArr.map((result, index) => {
+            {props.resultsArr.length > 1 ? props.resultsArr.map((result, index) => {
                 return  <div key={index}>
                             <div className='row'>
                                 <img onClick={() => bookSelect(result)}src={result.imageLinks || 'N/A'} alt='cover-art' />
-                                <h3>{result.bookTitle || 'N/A'}</h3>
-                                <h3>{result.author || 'N/A'}</h3>
-                                <h3>{result.averageRating || 'N/A'}</h3>
-                                <h3>{result.publishedDate || 'N/A'}</h3>
+                                <h5>{result.bookTitle || 'N/A'}</h5>
+                                <h5>{result.author || 'N/A'}</h5>
+                                <h5>{result.averageRating || 'N/A'}</h5>
+                                <h5>{result.publishedDate || 'N/A'}</h5>
                             </div>
                             <hr />
                         </div>
-            })}
+            }) : <h1>Please make a search</h1>}
         </div>
     )
 }

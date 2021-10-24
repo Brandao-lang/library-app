@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import '../styles/signup.css'
 
 interface LoginState {
@@ -14,6 +16,8 @@ export default function Login() {
         email: '',
         password: ''
     })
+    const dispatch = useDispatch()
+    const history = useHistory()
 
     const inputHandler = (e:any) => {
         setInput({
@@ -33,12 +37,14 @@ export default function Login() {
         } )
         .then(res => {
             console.log(res.data)
+            dispatch({type: 'user/LoginUser', payload: res.data})
             setInput({
                 email: '',
                 password: ''
             })
+            history.push('/my-library')
         
-        }).catch ((err) => {
+        }).catch (err => {
             console.log(`login failed: ${err}`)
         })
     }
@@ -55,7 +61,7 @@ export default function Login() {
                     onChange={inputHandler}
                 />
                 <input
-                    type='text'
+                    type='password'
                     name='password'
                     placeholder='password'
                     onChange={inputHandler}

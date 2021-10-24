@@ -37,7 +37,7 @@ export default function Signup() {
                 password: ''
             })
         
-        }).catch ((err) => {
+        }).catch (err => {
             console.log(`signup failed: ${err}`)
         })
     }

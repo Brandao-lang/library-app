@@ -14,7 +14,7 @@ export default function userSlice(state=initialState, action:any) {
     switch(action.type) {
         case 'user/LoginUser': {
             return {
-                username: action.payload.username,
+                username: action.payload.name,
                 email: action.payload.email,
                 isLoggedIn: true
             }

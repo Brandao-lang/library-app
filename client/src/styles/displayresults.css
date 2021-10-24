@@ -4,8 +4,13 @@
   margin: 30px;
 }
 
-.row h3 {
-  width: 10%;
+.row img {
+  height: 150px;
+  width: auto;
+}
+
+.row h5 {
+  width: 15%;
 }
 
 /* .row img:hover {

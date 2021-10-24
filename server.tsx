@@ -1,13 +1,12 @@
-// import { runMain } from "module"
-
 const { default: axios } = require('axios')
 const express = require('express')
 const path = require("path")
 const { MongoClient } = require('mongodb')
 
+//Configurations
+const port = 5000
 const app = express()
 app.use(express.json())
-const port = 5000
 const url =  `mongodb+srv://dbAdmin:${process.env.REACT_APP_PASS}@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
 const client = new MongoClient(url)
 
@@ -30,12 +29,13 @@ app.post('/signup', async(request, response) => {
             "password" : `${password}`
         }
 
-        const p = await col.insertOne(userDocument)
+        const user = await col.insertOne(userDocument)
         const myDoc = await col.findOne({name: 'Steve'})
         console.log(myDoc)
 
     } catch (err) {
         console.log(err.stack)
+    
     } finally {
         await client.close()
     }
@@ -67,8 +67,9 @@ app.get('/login', async(request, response) => {
 
     } catch (err) {
         console.log(`login api failed: ${err}`)
+    
     } finally {
-        client.close()
+        await client.close()
     }
 })
 
@@ -79,8 +80,8 @@ app.get('/fetchResults', async(request, response) => {
     const author = request.query.author
     const apiArr = []
 
-     await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.REACT_APP_APIKEY}`
-     ).then(res => {
+    await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.REACT_APP_APIKEY}`
+    ).then(res => {
         const responseLength = res.data.items.length
         
         for (let i = 0; i < responseLength; i++) {
@@ -97,6 +98,7 @@ app.get('/fetchResults', async(request, response) => {
         }
 
         response.status(200).send(apiArr)
+    
     }).catch(err => {
         console.log(`GOOGLE API FAIL: ${err}`)
     })
