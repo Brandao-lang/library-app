@@ -1,8 +1,8 @@
 .form-container {
   position: absolute;
-  top: 40%;
+  top: 20%;
   left: 36%;
-  margin-top: -40px;
+  margin-top: -20px;
   margin-left: -36px;
 }
 
@@ -10,6 +10,13 @@
   top: 0;
   margin-top: 0;
   width: 100vw;
+}
+
+.logo-searched {
+  position: absolute;
+  left: 0;
+  margin-left: 20px;
+  height: 60px;
 }
 
 .hide-title {
@@ -32,8 +39,12 @@
   align-self: center;
 }
 
+.svg-search {
+  fill: rgba(0, 0, 0, 1);
+}
+
 .svg-search:hover {
-  color: #fff;
+  fill: #fff;
 }
 
 .search-container input[type="text"] {

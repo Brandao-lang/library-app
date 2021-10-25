@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import '../styles/signup.css'
 
 interface SignupState {
@@ -44,30 +45,35 @@ export default function Signup() {
 
 
     return (
-        <div className='sign-up-container'>
-            <h1>Create an Account</h1>
-            <form className='signup-form' onSubmit={submitHandler}>
-                <input
-                    type='text'
-                    name='username'
-                    placeholder='username'
-                    onChange={inputHandler}
-                />
-                <input
-                    type='text'
-                    name='email'
-                    placeholder='email'
-                    onChange={inputHandler}
-                />
-                <input
-                    type='text'
-                    name='password'
-                    placeholder='password'
-                    onChange={inputHandler}
-                />
-                <br/>
-                <button>Confirm</button>
-            </form>
-        </div>
+        <>
+            <Link to='/search'>
+                <img className='logo-searched' src='https://i.pinimg.com/564x/87/49/8f/87498f6392c7d93020311a4cc2dfad2a.jpg' alt='owl-img'/>
+            </Link>
+            <div className='sign-up-container'>
+                <h1>Create an Account</h1>
+                <form className='signup-form' onSubmit={submitHandler}>
+                    <input className='form-control'
+                        type='text'
+                        name='username'
+                        placeholder='username'
+                        onChange={inputHandler}
+                    />
+                    <input className='form-control'
+                        type='text'
+                        name='email'
+                        placeholder='email'
+                        onChange={inputHandler}
+                    />
+                    <input className='form-control'
+                        type='password'
+                        name='password'
+                        placeholder='password'
+                        onChange={inputHandler}
+                    />
+                    <br/>
+                    <button className='btn btn-outline-primary'>Confirm</button>
+                </form>
+            </div>
+        </>
     )
 }

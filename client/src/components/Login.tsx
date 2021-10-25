@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import '../styles/signup.css'
 
 interface LoginState {
@@ -51,24 +52,29 @@ export default function Login() {
 
 
     return (
-        <div className='sign-up-container'>
-            <h1>Login</h1>
-            <form className='signup-form' onSubmit={submitHandler}>
-               <input
-                    type='text'
-                    name='email'
-                    placeholder='email'
-                    onChange={inputHandler}
-                />
-                <input
-                    type='password'
-                    name='password'
-                    placeholder='password'
-                    onChange={inputHandler}
-                />
-                <br/>
-                <button>login</button>
-            </form>
-        </div>
+        <>
+            <Link to='/search'>
+                <img className='logo-searched' src='https://i.pinimg.com/564x/87/49/8f/87498f6392c7d93020311a4cc2dfad2a.jpg' alt='owl-img'/>
+            </Link>
+            <div className='sign-up-container'>
+                <h1>Login</h1>
+                <form className='signup-form' onSubmit={submitHandler}>
+                <input className='form-control'
+                        type='text'
+                        name='email'
+                        placeholder='email'
+                        onChange={inputHandler}
+                    />
+                    <input className='form-control'
+                        type='password'
+                        name='password'
+                        placeholder='password'
+                        onChange={inputHandler}
+                    />
+                    <br/>
+                    <button className='btn btn-outline-primary'>login</button>
+                </form>
+            </div>
+        </>
     )
 }

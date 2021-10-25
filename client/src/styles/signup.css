@@ -4,6 +4,7 @@
   left: 36%;
   margin-top: -40px;
   margin-left: -36px;
+  /* background-color: red; */
 }
 
 .signup-form {
@@ -13,6 +14,6 @@
 
 .signup-form input[type="text"],
 .signup-form input[type="password"] {
-  width: 70%;
+  width: 96%;
   margin: 10px;
 }

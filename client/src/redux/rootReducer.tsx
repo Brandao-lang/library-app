@@ -7,7 +7,7 @@ import userSlice from './reducers/userSlice';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['bookInfo']
+    whitelist: ['bookInfo', 'userInfo']
 }
 
 const rootReducer = combineReducers({
