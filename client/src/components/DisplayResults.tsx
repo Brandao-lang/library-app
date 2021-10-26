@@ -3,6 +3,7 @@ import { HomePageState } from './Homepage'
 import { useDispatch } from 'react-redux'
 import '../styles/displayresults.css'
 import { useHistory } from 'react-router-dom';
+import { stars } from '../styles/assets/stars-rating'
 
 interface DisplayResultsProps {
     resultsArr: HomePageState['results']
@@ -25,7 +26,7 @@ const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
                                 <img onClick={() => bookSelect(result)}src={result.imageLinks || 'N/A'} alt='cover-art' />
                                 <h5>{result.bookTitle || 'N/A'}</h5>
                                 <h5>{result.author || 'N/A'}</h5>
-                                <h5>{result.averageRating || 'N/A'}</h5>
+                                <h5>{stars[result.averageRating] || 'N/A'}</h5>
                                 <h5>{result.publishedDate || 'N/A'}</h5>
                             </div>
                             <hr />

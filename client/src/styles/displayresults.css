@@ -9,11 +9,10 @@
   width: auto;
 }
 
+.row img:hover {
+  cursor: pointer;
+}
+
 .row h5 {
   width: 15%;
 }
-
-/* .row img:hover {
-  height: 14rem;
-  transition: 3s;
-} */

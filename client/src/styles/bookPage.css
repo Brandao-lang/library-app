@@ -1,0 +1,26 @@
+.display-6 {
+  display: inline-block;
+  margin-bottom: 5%;
+}
+
+.display-6:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+@media only screen and (min-width: 1000px) {
+  .details-container {
+    width: 60vw;
+    margin: 0 auto;
+  }
+
+  .info {
+    text-align: left;
+    padding-left: 30%;
+  }
+
+  .details-container img {
+    height: 25rem;
+    float: left;
+  }
+}

@@ -16,7 +16,7 @@ interface BookSearchProps {
     updateResults(data: HomePageState['results']):void
 }
 
-interface AxiosShape {
+export interface AxiosShape {
     data: Array<{
         bookTitle: string, 
         author:string,
