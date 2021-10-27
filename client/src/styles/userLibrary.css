@@ -3,3 +3,21 @@
   right: 0;
   margin: 15px;
 }
+
+@media only screen and (min-width: 500px) {
+  .user-library-container {
+    /* background-color: red; */
+    height: 100vh;
+  }
+
+  .dashboard {
+    /* background-color: green; */
+    position: absolute;
+    width: 70%;
+    text-align: left;
+    top: 15%;
+    left: 16%;
+    margin-top: -15px;
+    margin-left: -16px;
+  }
+}

@@ -10,13 +10,14 @@
 
 @media only screen and (min-width: 1000px) {
   .details-container {
+    display: flex;
     width: 60vw;
     margin: 0 auto;
   }
 
   .info {
     text-align: left;
-    padding-left: 30%;
+    padding-left: 5%;
   }
 
   .details-container img {

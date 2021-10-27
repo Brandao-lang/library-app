@@ -26,7 +26,10 @@ app.post('/signup', async(request, response) => {
         let userDocument = {
             "name" : `${username}`,
             "email" : `${email}`,
-            "password" : `${password}`
+            "password" : `${password}`,
+            "library": {
+                "books": []
+            }
         }
 
         const user = await col.insertOne(userDocument)
@@ -102,6 +105,50 @@ app.get('/fetchResults', async(request, response) => {
     }).catch(err => {
         console.log(`GOOGLE API FAIL: ${err}`)
     })
+})
+
+app.put('/updateLibrary', async(request, response) => {
+    
+    //everything came undefiend, fix this issue
+    const user = request.query.email
+    const title = request.query.title
+    console.log(title)
+    console.log(user)
+    
+    const book = {
+        title: request.query.title,
+        author: request.query.author,
+        pages: request.query.pages,
+        image: request.query.image
+    }
+
+    try {
+        await client.connect()
+        console.log('connected to database successfully')
+        const db = client.db('BOOK_CLUSTER')
+        const col = db.collection('users')
+        
+        const addToLibrary = await col.updateOne (
+            { email: user },
+            {
+                $addToSet: { library: {
+                    books: book
+                } }
+            }
+        )
+
+        response.status(200).send('book added to library successfully')
+        
+    } catch (err) {
+        console.log(`update library api failed: ${err}`)
+
+    } finally {
+        client.close()
+
+    }
+
+
+
 })
 
 
