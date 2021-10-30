@@ -4,14 +4,30 @@
   margin: 15px;
 }
 
+.dashboard img:hover {
+  height: 13rem;
+  transition: 0.3s;
+}
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book-card svg {
+  margin-left: 10px;
+}
+
+.book-card svg:hover {
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 500px) {
   .user-library-container {
-    /* background-color: red; */
     height: 100vh;
   }
 
   .dashboard {
-    /* background-color: green; */
     position: absolute;
     width: 70%;
     text-align: left;
@@ -19,5 +35,10 @@
     left: 16%;
     margin-top: -15px;
     margin-left: -16px;
+  }
+
+  .dashboard img {
+    margin-right: 25px;
+    margin-bottom: 25px;
   }
 }

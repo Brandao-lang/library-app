@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/rootReducer'
 import '../styles/bookPage.css'
 import { AxiosShape } from './BookSearch'
@@ -14,6 +14,7 @@ interface BookPageProps {
 const BookPage: React.FC<BookPageProps> = (props) => {
     const book = useSelector((state:RootState) => state.bookInfo)
     const user = useSelector((state:RootState) => state.userInfo)
+    const dispatch = useDispatch()
     
     const searchAuthor = async() => {
         await axios.get<AxiosShape['data']>('/fetchResults', {
@@ -30,17 +31,17 @@ const BookPage: React.FC<BookPageProps> = (props) => {
     }
 
     const addBook = async() => {
-        await axios.put('/updateLibrary', {
-            params: {
-                title: book.title,
-                author: book.author,
-                pages: book.pages,
-                image: book.image,
-                email: user.email
-            }
-        })
+        const selectedBook = {
+            title: book.title,
+            author: book.author,
+            pages: book.pages,
+            image: book.image,
+            email: user.email
+        }
+
+        await axios.put('/updateLibrary', selectedBook)
         .then( res => {
-            console.log(res.data)
+            dispatch({type:'library/AddBook', payload: selectedBook})
 
         }).catch(err => {
             console.log(`book add to library failed: ${err}`)

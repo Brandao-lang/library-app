@@ -9,6 +9,7 @@ const NavDropdown: React.FC = () => {
     const user = useSelector((state:RootState) => state.userInfo)
     
     const userLogout = () => {
+        dispatch({type: 'library/EmptyLibrary'})
         dispatch({type: 'user/LogoutUser'})
     }
 

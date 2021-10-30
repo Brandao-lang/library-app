@@ -19,7 +19,6 @@ app.post('/signup', async(request, response) => {
     
     try {
         await client.connect()
-        console.log('connected to database successfully')
         const db = client.db('BOOK_CLUSTER')
         const col = db.collection('users')
 
@@ -52,7 +51,6 @@ app.get('/login', async(request, response) => {
 
     try {
         await client.connect()
-        console.log('connected to database successfully')
         const db = client.db('BOOK_CLUSTER')
         const col = db.collection('users')
 
@@ -64,8 +62,7 @@ app.get('/login', async(request, response) => {
         if (!user) {
             response.status(400).send('user not found')
         }
-
-        console.log(user)
+        
         response.status(200).send(user)
 
     } catch (err) {
@@ -108,32 +105,24 @@ app.get('/fetchResults', async(request, response) => {
 })
 
 app.put('/updateLibrary', async(request, response) => {
+    const { title, author, pages, image, email } = request.body
     
-    //everything came undefiend, fix this issue
-    const user = request.query.email
-    const title = request.query.title
-    console.log(title)
-    console.log(user)
-    
-    const book = {
-        title: request.query.title,
-        author: request.query.author,
-        pages: request.query.pages,
-        image: request.query.image
-    }
-
     try {
         await client.connect()
-        console.log('connected to database successfully')
         const db = client.db('BOOK_CLUSTER')
         const col = db.collection('users')
         
         const addToLibrary = await col.updateOne (
-            { email: user },
+            {email},
             {
-                $addToSet: { library: {
-                    books: book
-                } }
+                $addToSet: {
+                    books: {
+                        title,
+                        author,
+                        pages,
+                        image
+                    }
+                }
             }
         )
 
@@ -146,9 +135,66 @@ app.put('/updateLibrary', async(request, response) => {
         client.close()
 
     }
+})
 
+app.get('/GetLibrary', async(request, response) => {
+    const email = request.query.user
 
+    try {
+        await client.connect()
+        const db = client.db('BOOK_CLUSTER')
+        const col = db.collection('users')
 
+        const library = await col.findOne({
+            email
+        })
+        
+        response.status(200).send(library.books)
+
+    } catch (err) {
+        console.log(`get library API failed: ${err}`)
+
+    } finally {
+        client.close()
+
+    }
+})
+
+app.delete('/removeBook', async(request, response) => {
+    const index = request.query.index
+    const email = request.query.user
+
+    try {
+        await client.connect()
+        const db = client.db('BOOK_CLUSTER')
+        const col = db.collection('users')
+
+        const library = await col.findOne({
+            email
+        })
+        
+        const newArr = [...library.books]
+        newArr.splice(index, 1)
+
+        const updateLibrary = await col.updateOne (
+            {email},
+            {
+                $set: {
+                    'books': newArr
+                }
+            }
+        )
+            
+        response.status(200).send('book successfully deleted')
+
+    } catch (err) {
+        console.log(`remove book API failed: ${err}`)
+
+    } finally {
+        client.close()
+
+    }
+    
 })
 
 
