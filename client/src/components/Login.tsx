@@ -43,7 +43,7 @@ export default function Login() {
                 email: '',
                 password: ''
             })
-            history.push('/my-library')
+            history.push('/my-library/all-books')
         
         }).catch (err => {
             console.log(`login failed: ${err}`)

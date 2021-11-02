@@ -24,7 +24,7 @@ export default function userLibrarySlice(state=initialState, action:any) {
             }
         }
 
-        case 'library/RemoveBook': {
+        case 'library/removeBook': {
             let bookArr = [...state.userBooks]
             bookArr.splice(action.payload, 1)
 
@@ -32,7 +32,7 @@ export default function userLibrarySlice(state=initialState, action:any) {
                 ...state, userBooks: bookArr
             }
         }
-        case 'library/GetLibrary': {
+        case 'library/getLibrary': {
             return {
                 ...state, userBooks: action.payload
             }

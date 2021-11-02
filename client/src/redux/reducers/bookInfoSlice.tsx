@@ -24,7 +24,7 @@ export default function bookInfoSlice(state=initialState, action:any) {
     switch(action.type) {
         case 'book/SelectedBook': {
             return {
-                // ...state,
+                ...state,
                     title: action.payload.bookTitle,
                     author: action.payload.author,
                     publisher: action.payload.publisher,
