@@ -6,24 +6,58 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { stars } from '../../../styles/assets/stars-rating';
 import '../../../styles/userLibrary.css'
 
+interface LibraryModalState {
+  bookOptions : {
+    status:string,
+    rating: number
+  }
+}
+
 interface LibraryModalProps {
   img: string | undefined,
   title: string,
-  index: number
+  index: number,
+  status: string,
+  rating: number
 }
 
-const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index}) => {
-    const [show, setShow] = useState(false);
-    const [rating, setRating] = useState(0)
+const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, rating}) => {
+    const [show, setShow] = useState(false)
+    const [bookOptions, setBookOptions] = useState<LibraryModalState['bookOptions']>({
+      status: status,
+      rating: rating
+    })
     
     const dispatch = useDispatch()
-    const user = useSelector((state:RootState) => state.userInfo.email)
+    const userID = useSelector((state:RootState) => state.userInfo.id)
+    
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+   const handleChange = (e:any) => {
+      setBookOptions({
+        ...bookOptions,
+        [e.target.name]: e.target.value
+      })
+    }
 
-    const handleChange = (e:any) => {
-        setRating(e.target.value)
+    const handleSubmit = async(e:any) => {
+      const update = {
+          status: bookOptions.status,
+          rating: bookOptions.rating,
+          userID,
+          index
+      }
+
+      dispatch({type:'library/updateBook', payload: update})
+
+      try {
+        await axios.put('/bookStatus', update)
+
+      } catch (err) {
+        console.log(`book status change failed: ${err}`)
+        
+      }
     }
 
     const deleteBook = async(index: number) => {
@@ -32,7 +66,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index}) => {
       await axios.delete('/removeBook', {
           params: {
               index,
-              user
+              userID
           }
       })
       .then(res => {
@@ -43,7 +77,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index}) => {
   }
 
   return (
-    <>
+    <div key={index}>
       <img src={img} alt='cover' onClick={handleShow}/>
       <Modal 
       show={show} 
@@ -57,15 +91,23 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index}) => {
           <div className='modal-box'>
             <img src={img} alt='cover-art' />
             <div className='options-container'>
-              <Form.Select className='modal-select' aria-label="Default select example">
+              <Form.Select 
+              className='status-select'
+              name='status' 
+              aria-label="Default select example"
+              value={bookOptions.status}
+              onChange={handleChange}
+              >
                 <option>Change Status</option>
-                <option value="1">Not Started</option>
-                <option value="2">Reading</option>
-                <option value="3">Finished</option>
+                <option value="Not Started">Not Started</option>
+                <option value="Reading">Reading</option>
+                <option value="Finished">Finished</option>
               </Form.Select>
               <Form.Select 
-              className='rating-select' 
+              className='rating-select'
+              name='rating' 
               aria-label="Default select example"
+              value={bookOptions.rating}
               onChange={handleChange}
               >
                 <option value="0">0</option>
@@ -81,7 +123,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index}) => {
                 <option value="5">5</option>
               </Form.Select>
               <br/>
-              <span className='current-rating'>{stars[rating]}</span>
+              <span className='current-rating'>{stars[bookOptions.rating]}</span>
             </div>
           </div>
           <br/>
@@ -91,12 +133,12 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index}) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
     );
 };
 

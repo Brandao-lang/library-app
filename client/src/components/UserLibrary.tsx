@@ -9,13 +9,13 @@ import BooksDisplay from './userLibraryComponents/BooksDisplay'
 
 export default function UserLibrary() {
     const dispatch = useDispatch()
-    const user = useSelector((state:RootState) => state.userInfo.email)
+    const userID = useSelector((state:RootState) => state.userInfo.id)
     
     useEffect(() => {
         async function getLibrary() {
             await axios.get('/getLibrary', {
                 params: {
-                    user
+                    userID
                 }
             })
             .then(res => {
@@ -27,7 +27,7 @@ export default function UserLibrary() {
         }
         getLibrary()
     
-    },[user, dispatch])
+    },[userID, dispatch])
 
     return (
         <div className='user-library-container'>

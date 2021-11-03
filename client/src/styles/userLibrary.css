@@ -5,8 +5,9 @@
 }
 
 .book-list img:hover {
-  height: 13rem;
-  transition: 0.3s;
+  cursor: pointer;
+  /* height: 13rem;
+  transition: 0.3s; */
 }
 
 .book-list {
@@ -26,7 +27,7 @@
   padding: 10px;
 }
 
-.modal-select,
+.status-select,
 .current-rating {
   margin-left: 40px;
 }

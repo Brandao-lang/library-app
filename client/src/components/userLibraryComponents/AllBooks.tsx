@@ -9,14 +9,14 @@ const AllBooks: React.FC = () => {
     
     return (
         <>
-            <p>Total ({library.userBooks.length})</p>
+            <p>Total ({library.allUserBooks.length})</p>
             <div className='book-list'>
-                {!library.userBooks ? 
+                {!library.allUserBooks ? 
                 <h1>No Books</h1> : 
-                library.userBooks.map((book: { title: string; image: string | undefined; }, index: number) => {
+                library.allUserBooks.map((book: { title: string; image: string | undefined; status: string; rating: number }, index: number) => {
                     return <div className='book-card' key={index}>
-                                <LibraryModal index={index} title={book.title} img={book.image}/>
-                                <p>Not Started</p>
+                                <LibraryModal index={index} title={book.title} img={book.image} status={book.status} rating={book.rating}/>
+                                <p>{book.status}</p>
                             </div>
                         })}
                     </div>

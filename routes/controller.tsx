@@ -3,21 +3,22 @@ const axios = require('axios')
 
 const url =  `mongodb+srv://dbAdmin:${process.env.REACT_APP_PASS}@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
 const client = new MongoClient(url)
+const db = client.db('BOOK_CLUSTER')
+const ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     getLibrary: async(request, response) => {
-        const email = request.query.user
+        const id = request.query.userID
     
         try {
             await client.connect()
-            const db = client.db('BOOK_CLUSTER')
-            const col = db.collection('users')
+            const libraryCol = db.collection('library')
     
-            const library = await col.findOne({
-                email
+            const library = await libraryCol.findOne({
+                _id: ObjectId(`${id}`)
             })
             
-            response.status(200).send(library.books)
+            response.status(200).send(library.all_books)
     
         } catch (err) {
             console.log(`get library API failed: ${err}`)
@@ -29,22 +30,23 @@ module.exports = {
     },
     
     updateLibrary: async(request, response) => {
-        const { title, author, pages, image, email } = request.body
+        const { title, author, pages, image, id } = request.body
         
         try {
             await client.connect()
-            const db = client.db('BOOK_CLUSTER')
-            const col = db.collection('users')
+           const libraryCol = db.collection('library')
             
-            const addToLibrary = await col.updateOne (
-                {email},
+            const addToLibrary = await libraryCol.updateOne (
+                {_id: ObjectId(`${id}`)},
                 {
                     $addToSet: {
-                        books: {
+                        all_books: {
                             title,
                             author,
                             pages,
-                            image
+                            image,
+                            status: 'Not Started',
+                            rating: 0
                         }
                     }
                 }
@@ -63,25 +65,24 @@ module.exports = {
     
     removeBook: async(request, response) => {
         const index = request.query.index
-        const email = request.query.user
+        const id = request.query.userID
     
         try {
             await client.connect()
-            const db = client.db('BOOK_CLUSTER')
-            const col = db.collection('users')
+            const libraryCol = db.collection('library')
     
-            const library = await col.findOne({
-                email
+            const library = await libraryCol.findOne({
+                _id: ObjectId(`${id}`)
             })
             
-            const newArr = [...library.books]
+            const newArr = [...library.all_books]
             newArr.splice(index, 1)
     
-            const updateLibrary = await col.updateOne (
-                {email},
+            const updateLibrary = await libraryCol.updateOne (
+                {_id: ObjectId(`${id}`)},
                 {
                     $set: {
-                        'books': newArr
+                        all_books: newArr
                     }
                 }
             )
@@ -98,33 +99,69 @@ module.exports = {
         
     },
 
+    bookStatus: async(request, response) => {
+        const { status, rating, userID, index } = request.body
+    
+        try {
+            await client.connect()
+            const libraryCol = db.collection('library')
+
+            await libraryCol.updateOne(
+                {_id: ObjectId(`${userID}`)},
+                
+                {
+                    $set: {
+                        [`all_books.${index}.status`] : status,
+                        [`all_books.${index}.rating`] : rating
+                    }
+                }
+            )
+            
+        } catch (err) {
+            console.log(`book status api failed : ${err}`)
+
+        } finally {
+            client.close()
+        
+        }
+
+        response.status(200).send('ok')
+    },
+
     //Signup/Login endpoints
     signup: async(request, response) => {
         const { username, email, password } = request.body
         
         try {
             await client.connect()
-            const db = client.db('BOOK_CLUSTER')
-            const col = db.collection('users')
+            const userCol = db.collection('users')
+            const libraryCol = db.collection('library')
     
             let userDocument = {
                 "name" : `${username}`,
                 "email" : `${email}`,
-                "password" : `${password}`,
-                "library": {
-                    "books": []
-                }
+                "password" : `${password}`
+            }
+            await userCol.insertOne(userDocument)
+
+            const userID = await userCol.findOne({email})
+
+            let libraryDocument = {
+                "_id": userID._id,
+                "all_books" : [],
+                "reading": [],
+                "not_started": [],
+                "finished": []
             }
     
-            const user = await col.insertOne(userDocument)
-            const myDoc = await col.findOne({name: 'Steve'})
-            console.log(myDoc)
-    
+            await libraryCol.insertOne(libraryDocument)
+        
         } catch (err) {
             console.log(err.stack)
         
         } finally {
             await client.close()
+
         }
     
         response.status(200).send('user added to db')
@@ -136,12 +173,11 @@ module.exports = {
     
         try {
             await client.connect()
-            const db = client.db('BOOK_CLUSTER')
-            const col = db.collection('users')
+            const userCol = db.collection('users')
     
-            const user = await col.findOne({
-                email: email,
-                password: password
+            const user = await userCol.findOne({
+                email,
+                password
             })
     
             if (!user) {

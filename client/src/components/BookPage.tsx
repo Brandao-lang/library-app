@@ -36,7 +36,7 @@ const BookPage: React.FC<BookPageProps> = (props) => {
             author: book.author,
             pages: book.pages,
             image: book.image,
-            email: user.email
+            id: user.id
         }
 
         await axios.put('/updateLibrary', selectedBook)

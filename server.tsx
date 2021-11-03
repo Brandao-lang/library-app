@@ -16,6 +16,7 @@ app.get('/getLibrary', controller.getLibrary)
 app.get('/login', controller.login)
 app.post('/signup', controller.signup)
 app.put('/updateLibrary', controller.updateLibrary)
+app.put('/bookStatus', controller.bookStatus)
 app.delete('/removeBook', controller.removeBook)
 
 
