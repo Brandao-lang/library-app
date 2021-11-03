@@ -1,45 +1,59 @@
 interface userLibraryState {
-    userBooks: {
+    allUserBooks: {
         title: string,
         author: string,
         pages: number
-        image: string
+        image: string,
+        status: string,
+        rating: number
     }[]
 }
 
 const initialState: userLibraryState = {
-    userBooks: []
+    allUserBooks: []
 }
 
 export default function userLibrarySlice(state=initialState, action:any) {
     switch(action.type) {
         case 'library/AddBook': {
             return {
-               ...state, userBooks: [...state.userBooks, {
+               ...state, allUserBooks: [...state.allUserBooks, {
                    title: action.payload.title,
                    author: action.payload.author,
                    pages: action.payload.pages,
-                   image: action.payload.image
+                   image: action.payload.image,
+                   status: 'Not Started',
+                   rating: 0
                }]
             }
         }
 
-        case 'library/RemoveBook': {
-            let bookArr = [...state.userBooks]
+        case 'library/removeBook': {
+            let bookArr = [...state.allUserBooks]
             bookArr.splice(action.payload, 1)
 
             return {
-                ...state, userBooks: bookArr
+                ...state, allUserBooks: bookArr
             }
         }
-        case 'library/GetLibrary': {
+        case 'library/updateBook' : {
+            const bookArr = [...state.allUserBooks]
+
+            bookArr[action.payload.index].status = action.payload.status
+            bookArr[action.payload.index].rating = action.payload.rating
+
             return {
-                ...state, userBooks: action.payload
+               ...state, allUserBooks: bookArr
+            }
+        }
+        case 'library/getLibrary': {
+            return {
+                ...state, allUserBooks: action.payload
             }
         }
         case 'library/EmptyLibrary': {
             return {
-               ...state, userBooks: []
+               ...state, allUserBooks: []
             }
         }
         default:

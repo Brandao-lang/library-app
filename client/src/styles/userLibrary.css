@@ -4,24 +4,43 @@
   margin: 15px;
 }
 
-.dashboard img:hover {
-  height: 13rem;
-  transition: 0.3s;
+.book-list img:hover {
+  cursor: pointer;
+  /* height: 13rem;
+  transition: 0.3s; */
 }
 
 .book-list {
   display: flex;
   flex-wrap: wrap;
+  position: absolute;
+  top: 120px;
 }
 
-.book-card svg {
-  margin-left: 10px;
+/* library modal styling */
+
+.modal-box {
+  display: flex;
 }
 
-.book-card svg:hover {
-  cursor: pointer;
+.options-container {
+  padding: 10px;
 }
 
+.status-select,
+.current-rating {
+  margin-left: 40px;
+}
+
+.rating-select {
+  width: 40%;
+  margin: 20px 40px;
+  margin-bottom: 5px;
+}
+
+.delete-btn {
+  margin-left: 400px;
+}
 @media only screen and (min-width: 500px) {
   .user-library-container {
     height: 100vh;
