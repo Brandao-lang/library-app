@@ -56,7 +56,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, r
 
       } catch (err) {
         console.log(`book status change failed: ${err}`)
-        
+
       }
     }
 
