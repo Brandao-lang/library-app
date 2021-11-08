@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
@@ -8,7 +8,7 @@ import '../../../styles/userLibrary.css'
 
 interface LibraryModalState {
   bookOptions : {
-    status:string,
+    status: string,
     rating: number
   }
 }
@@ -17,55 +17,72 @@ interface LibraryModalProps {
   img: string | undefined,
   title: string,
   index: number,
-  status: string,
-  rating: number
+  propStatus: string,
+  propRating: number,
+  arrayName: string
 }
 
-const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, rating}) => {
-    const [show, setShow] = useState(false)
-    const [bookOptions, setBookOptions] = useState<LibraryModalState['bookOptions']>({
-      status: status,
-      rating: rating
-    })
-    
+const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatus, propRating, arrayName}) => {
     const dispatch = useDispatch()
     const userID = useSelector((state:RootState) => state.userInfo.id)
+    const library = useSelector((state: RootState) => state.userLibrary.allUserBooks)
+    const [show, setShow] = useState(false)
+    const [options, setOptions] = useState<LibraryModalState['bookOptions']>({
+      status: '',
+      rating: 0
+    })
     
-    const handleClose = () => setShow(false)
+    const topIndex = library.findIndex((book: { title: string }) => book.title === title)
+
+    const handleClose = () => setShow(false) 
     const handleShow = () => setShow(true)
 
+    const checkArray = (arrayName: string) => {
+      if (arrayName === 'readingBooks') {
+        dispatch({type:'library/readingFilter'}) 
+        } 
+      else if (arrayName === 'finishedBooks') {
+        dispatch({type:'library/finishedFilter'})
+        } 
+      else if (arrayName === 'notStartedBooks') {
+        dispatch({type:'library/notStartedFilter'})
+      }
+    }
+
    const handleChange = (e:any) => {
-      setBookOptions({
-        ...bookOptions,
+      setOptions({
+        ...options,
         [e.target.name]: e.target.value
       })
     }
 
-    const handleSubmit = async(e:any) => {
+    const handleSubmit = async(topIndex:number) => {
       const update = {
-          status: bookOptions.status,
-          rating: bookOptions.rating,
+          status: options.status,
+          rating: options.rating,
           userID,
-          index
+          topIndex,
+          title
       }
 
       dispatch({type:'library/updateBook', payload: update})
+      checkArray(arrayName)
 
       try {
         await axios.put('/bookStatus', update)
-
-      } catch (err) {
+      } 
+      catch (err) {
         console.log(`book status change failed: ${err}`)
-
       }
     }
 
-    const deleteBook = async(index: number) => {
-      dispatch({type: 'library/removeBook', payload: index})
-
+    const deleteBook = async(index: number, topIndex:number) => {
+      dispatch({type: 'library/removeBook', payload: {index, title}})
+      checkArray(arrayName)
+      
       await axios.delete('/removeBook', {
           params: {
-              index,
+              topIndex,
               userID
           }
       })
@@ -74,12 +91,22 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, r
       }).catch(err => {
           console.log(`book could not be removed from the server: ${err}`)
       })
+      
   }
 
+  useEffect(() => {
+    setOptions({
+      status: propStatus,
+      rating: propRating
+    })
+  }, [propStatus, propRating])
+
+
   return (
-    <div key={index}>
+    <div className='modal-container'>
       <img src={img} alt='cover' onClick={handleShow}/>
-      <Modal 
+      <Modal
+      key={index++}
       show={show} 
       onHide={handleClose}
       centered
@@ -95,10 +122,9 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, r
               className='status-select'
               name='status' 
               aria-label="Default select example"
-              value={bookOptions.status}
+              value={options.status}
               onChange={handleChange}
               >
-                <option>Change Status</option>
                 <option value="Not Started">Not Started</option>
                 <option value="Reading">Reading</option>
                 <option value="Finished">Finished</option>
@@ -107,7 +133,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, r
               className='rating-select'
               name='rating' 
               aria-label="Default select example"
-              value={bookOptions.rating}
+              value={options.rating}
               onChange={handleChange}
               >
                 <option value="0">0</option>
@@ -123,17 +149,17 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, status, r
                 <option value="5">5</option>
               </Form.Select>
               <br/>
-              <span className='current-rating'>{stars[bookOptions.rating]}</span>
+              <span className='current-rating'>{stars[options.rating]}</span>
             </div>
           </div>
           <br/>
-          <Button className='delete-btn' variant='danger' onClick={() => deleteBook(index)}>Delete</Button>
+          <Button className='delete-btn' variant='danger' onClick={() => deleteBook(index, topIndex)}>Delete</Button>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="primary" onClick={() => handleSubmit(topIndex)}>
             Save Changes
           </Button>
         </Modal.Footer>

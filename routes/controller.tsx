@@ -18,7 +18,7 @@ module.exports = {
                 _id: ObjectId(`${id}`)
             })
             
-            response.status(200).send(library.all_books)
+            response.status(200).send(library)
     
         } catch (err) {
             console.log(`get library API failed: ${err}`)
@@ -33,7 +33,7 @@ module.exports = {
         const { title, author, pages, image, id } = request.body
         
         try {
-            await client.connect()
+           await client.connect()
            const libraryCol = db.collection('library')
             
             const addToLibrary = await libraryCol.updateOne (
@@ -64,7 +64,7 @@ module.exports = {
     },
     
     removeBook: async(request, response) => {
-        const index = request.query.index
+        const index = request.query.topIndex
         const id = request.query.userID
     
         try {
@@ -100,7 +100,7 @@ module.exports = {
     },
 
     bookStatus: async(request, response) => {
-        const { status, rating, userID, index } = request.body
+        const { status, rating, userID, topIndex } = request.body
     
         try {
             await client.connect()
@@ -111,8 +111,8 @@ module.exports = {
                 
                 {
                     $set: {
-                        [`all_books.${index}.status`] : status,
-                        [`all_books.${index}.rating`] : rating
+                        [`all_books.${topIndex}.status`] : status,
+                        [`all_books.${topIndex}.rating`] : rating
                     }
                 }
             )
@@ -149,9 +149,6 @@ module.exports = {
             let libraryDocument = {
                 "_id": userID._id,
                 "all_books" : [],
-                "reading": [],
-                "not_started": [],
-                "finished": []
             }
     
             await libraryCol.insertOne(libraryDocument)
