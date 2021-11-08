@@ -17,8 +17,34 @@
   top: 120px;
 }
 
-/* library modal styling */
+.book-card {
+  text-align: center;
+  margin-right: 25px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
 
+/* .status-text {
+  margin-bottom: 5px;
+  color: blue;
+} */
+
+.status-reading {
+  margin-bottom: 5px;
+  color: #208aae;
+}
+
+.status-finished {
+  margin-bottom: 5px;
+  color: green;
+}
+
+.status-not-started {
+  margin-bottom: 5px;
+  color: grey;
+}
+
+/* library modal styling */
 .modal-box {
   display: flex;
 }
@@ -57,7 +83,7 @@
   }
 
   .dashboard img {
-    margin-right: 25px;
-    margin-bottom: 25px;
+    /* margin-right: 25px; */
+    margin-bottom: 5px;
   }
 }
