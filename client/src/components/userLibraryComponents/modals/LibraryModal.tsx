@@ -26,6 +26,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatu
     const dispatch = useDispatch()
     const userID = useSelector((state:RootState) => state.userInfo.id)
     const library = useSelector((state: RootState) => state.userLibrary.allUserBooks)
+    // const allShelves = useSelector((state: RootState) => state.userLibrary.userShelves)
     const [show, setShow] = useState(false)
     const [options, setOptions] = useState<LibraryModalState['bookOptions']>({
       status: '',
@@ -129,6 +130,15 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatu
                 <option value="Reading">Reading</option>
                 <option value="Finished">Finished</option>
               </Form.Select>
+
+              {/* <Form.Select
+              className='shelf-select'
+              >
+                {allShelves.map((shelf, index) => {
+                  return <option value={index}>{shelf.name}</option>
+                })}
+              </Form.Select> */}
+
               <Form.Select 
               className='rating-select'
               name='rating' 

@@ -1,10 +1,10 @@
 const { MongoClient } = require('mongodb')
 const axios = require('axios')
 
-const url =  `mongodb+srv://dbAdmin:${process.env.REACT_APP_PASS}@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
+const url =  `mongodb+srv://dbAdmin:12MA16obs@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
 const client = new MongoClient(url)
 const db = client.db('BOOK_CLUSTER')
-const ObjectId = require('mongodb').ObjectId;
+var ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     getLibrary: async(request, response) => {
@@ -61,6 +61,35 @@ module.exports = {
             client.close()
     
         }
+    },
+
+    addShelf: async(request, response) => {
+        const { name, id } = request.body
+
+        try {
+            await client.connect()
+            const libraryCol = db.collection('library')
+    
+            const addShelfToLibrary = await libraryCol.updateOne (
+                {_id: ObjectId(`${id}`)},
+                {
+                    $addToSet: {
+                        shelves: {
+                            name,
+                            shelf: []
+                        }
+                    }
+                }
+            )
+
+        } catch (err) {
+            console.log(`add shelf api failed: ${err}`)
+
+        } finally {
+            client.close()
+        }
+
+        response.status(200).send('shelf added successfully')
     },
     
     removeBook: async(request, response) => {
@@ -149,6 +178,7 @@ module.exports = {
             let libraryDocument = {
                 "_id": userID._id,
                 "all_books" : [],
+                "shelves": []
             }
     
             await libraryCol.insertOne(libraryDocument)
@@ -197,7 +227,7 @@ module.exports = {
         const author = request.query.author
         const apiArr = []
     
-        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.REACT_APP_APIKEY}`
+        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=AIzaSyAAlwcY5uO4t1n6OS9nTQl7ZQHz7cLGh40`
         ).then(res => {
             const responseLength = res.data.items.length
             

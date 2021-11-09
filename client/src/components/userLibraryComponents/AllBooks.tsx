@@ -6,7 +6,6 @@ import '../../styles/userLibrary.css'
 import LibraryModal from './modals/LibraryModal';
 import { stars } from '../../styles/assets/stars-rating';
 
-
 const AllBooks: React.FC = () => {
     const [arrayName, setArrayName] = useState<'allUserBooks' | 'readingBooks' | 'notStartedBooks' | 'finishedBooks'>('allUserBooks')
     const library = useSelector((state: RootState) => state.userLibrary)
@@ -27,13 +26,15 @@ const AllBooks: React.FC = () => {
     
     return (
         <>
-            <Button style={{position: 'absolute', right:'0'}} onClick={() => setArrayName('allUserBooks')}>all</Button>
-            
-            <Button style={{position: 'absolute', right:'50px'}} onClick={ updateReading}>reading</Button>
-            
-            <Button style={{position: 'absolute', right:'140px'}} onClick={updateFinished}>finished</Button>
-            
-            <Button style={{position: 'absolute', right:'230px'}} onClick={updateNotStarted}>not started</Button>
+            <div>
+                <Button variant='secondary' style={{position: 'absolute', right:'0'}} onClick={() => setArrayName('allUserBooks')}>all</Button>
+                
+                <Button variant='secondary' style={{position: 'absolute', right:'50px'}} onClick={ updateReading}>reading</Button>
+                
+                <Button variant='secondary' style={{position: 'absolute', right:'140px'}} onClick={updateFinished}>finished</Button>
+                
+                <Button variant='secondary' style={{position: 'absolute', right:'230px'}} onClick={updateNotStarted}>not started</Button>
+            </div>
             
             <p>Total ({library[`${arrayName}`].length})</p>
             <div className='book-list'>

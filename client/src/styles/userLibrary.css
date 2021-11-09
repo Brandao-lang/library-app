@@ -4,10 +4,22 @@
   margin: 15px;
 }
 
+.library-sidebar {
+  position: absolute;
+  left: 0;
+  top: 20%;
+  list-style-type: none;
+  text-align: left;
+}
+
+.library-sidebar li button {
+  /* background: none; */
+  border: none;
+  margin-bottom: 15px;
+}
+
 .book-list img:hover {
   cursor: pointer;
-  /* height: 13rem;
-  transition: 0.3s; */
 }
 
 .book-list {
@@ -22,12 +34,8 @@
   margin-right: 25px;
   margin-bottom: 20px;
   border: 1px solid black;
+  /* height: 230px; */
 }
-
-/* .status-text {
-  margin-bottom: 5px;
-  color: blue;
-} */
 
 .status-reading {
   margin-bottom: 5px;
@@ -56,6 +64,10 @@
 .status-select,
 .current-rating {
   margin-left: 40px;
+}
+
+.shelf-select {
+  margin: 20px 40px;
 }
 
 .rating-select {

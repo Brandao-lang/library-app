@@ -31,13 +31,25 @@ interface userLibraryState {
         status: string,
         rating: number 
     }>,
+    userShelves: Array<{
+        name: string,
+        shelf: Array<{
+            title: string,
+            author: string,
+            pages: number
+            image: string,
+            status: string,
+            rating: number 
+        }>
+    }>
 }
 
 const initialState: userLibraryState = {
     allUserBooks: [],
     readingBooks: [],
     notStartedBooks: [],
-    finishedBooks: []
+    finishedBooks: [],
+    userShelves: []
 }
 
 export default function userLibrarySlice(state=initialState, action:any) {
@@ -152,7 +164,23 @@ export default function userLibrarySlice(state=initialState, action:any) {
                     allUserBooks: [],
                     readingBooks: [],
                     finishedBooks: [],
-                    notStartedBooks: []
+                    notStartedBooks: [],
+                    userShelves: []
+            }
+        }
+        case 'library/addShelf': {
+            return {
+                ...state, 
+                     userShelves: [...state.userShelves, {
+                         name: action.payload,
+                         shelf: []
+                     }]
+             }
+        }
+        case 'library/setShelf': {
+            return {
+                ...state, 
+                    allUserBooks: action.payload
             }
         }
         default:
