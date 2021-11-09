@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb')
 const axios = require('axios')
 
-const url =  `mongodb+srv://dbAdmin:12MA16obs@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
+const url =  `mongodb+srv://dbAdmin:${process.env.REACT_APP_PASS}@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
 const client = new MongoClient(url)
 const db = client.db('BOOK_CLUSTER')
 var ObjectId = require('mongodb').ObjectId;
@@ -227,7 +227,7 @@ module.exports = {
         const author = request.query.author
         const apiArr = []
     
-        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=AIzaSyAAlwcY5uO4t1n6OS9nTQl7ZQHz7cLGh40`
+        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.REACT_APP_APIKEY}`
         ).then(res => {
             const responseLength = res.data.items.length
             
