@@ -35,7 +35,7 @@
 }
 
 .search-container-centered button {
-  height: 35px;
+  height: 40px;
   align-self: center;
 }
 
@@ -64,4 +64,18 @@
 
 .login-signup-container button {
   margin: 5px;
+}
+
+@media only screen and (max-width: 700px) {
+  .logo-default {
+    height: 25vh;
+  }
+
+  .search-container {
+    width: 70vw;
+  }
+
+  .form-container {
+    left: 25%;
+  }
 }

@@ -8,7 +8,7 @@ const BooksDisplay: React.FC = () => {
     return (
         <div className='dashboard'>
             <h1>Your Library</h1>
-            <hr/>
+            <hr style={{marginBottom: '5px'}}/>
             <Switch>
                 <Route exact path='/my-library/all-books' component={AllBooks}/>
                 <Route path='/my-library/*' component={PageNotFound}/>

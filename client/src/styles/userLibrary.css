@@ -22,12 +22,8 @@
   margin-right: 25px;
   margin-bottom: 20px;
   border: 1px solid black;
+  /* height: 233px; */
 }
-
-/* .status-text {
-  margin-bottom: 5px;
-  color: blue;
-} */
 
 .status-reading {
   margin-bottom: 5px;
@@ -67,7 +63,7 @@
 .delete-btn {
   margin-left: 400px;
 }
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 700px) {
   .user-library-container {
     height: 100vh;
   }
@@ -85,5 +81,28 @@
   .dashboard img {
     /* margin-right: 25px; */
     margin-bottom: 5px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .book-list {
+    margin-left: 8%;
+    margin-top: 5%;
+  }
+
+  .book-card {
+    margin-right: 35px;
+  }
+
+  .filter-btn {
+    margin: 2px;
+    margin-top: 5px;
+  }
+
+  .dashboard {
+    position: absolute;
+    width: 100%;
+    top: 12%;
+    margin-top: -12px;
   }
 }
