@@ -19,7 +19,7 @@ const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className='results'>
             {props.resultsArr.length > 1 ? props.resultsArr.map((result, index) => {
                 return  <div key={index}>
                             <div className='row'>

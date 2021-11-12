@@ -78,4 +78,18 @@
   .form-container {
     left: 25%;
   }
+
+  .search-container-centered input[type="text"] {
+    margin: 5px;
+  }
+
+  .search-container-centered {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+  }
+  .results {
+    position: absolute;
+    top: 20%;
+  }
 }

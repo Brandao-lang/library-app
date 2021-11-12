@@ -53,9 +53,11 @@ const BookPage: React.FC<BookPageProps> = (props) => {
 
     return (
         <div className='details-container'>
-            <div>
+            <div className='test'>
                 <img src={book.image} alt='cover-art'/>
-                <Button 
+                <br/>
+                <Button
+                    className='add-btn' 
                     variant= {
                         hasClicked ?
                         'success' :
@@ -81,7 +83,8 @@ const BookPage: React.FC<BookPageProps> = (props) => {
                         <span>Add to library</span>
                     }
                 </Button>
-               
+               <br/>
+               <br/>
             </div>
             <div className='info'>
                 <h1><u>{book.title}</u></h1>
@@ -91,8 +94,34 @@ const BookPage: React.FC<BookPageProps> = (props) => {
                 <h5>Published: {book.publishedDate || 'N/A'}</h5>
                 <h5>Rating: {book.rating} {stars[book.rating] || 'N/A'}</h5>
                 <h5>Page Count: {book.pages || 'N/A'}</h5>
-                <br/>
-                <h5>Description:</h5>
+                <Button
+                    className='add-btn-mobile' 
+                    variant= {
+                        hasClicked ?
+                        'success' :
+                        'primary'
+                    }
+                    onClick={addBook}
+                    style={
+                            {
+                                float: 'left', 
+                                marginTop: '10px'
+                            }
+                        }
+                >
+                    {
+                        hasClicked ? 
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" style={{marginRight: '10px'}}width="16" height="16" fill="currentColor" className="bi bi-check-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                            </svg>
+                            Added
+                        </span> :
+                        <span>Add to library</span>
+                    }
+                </Button>
+                <h5 className='desc-text'>Description:</h5>
                 <p>{book.description}</p>
             </div>
         </div>

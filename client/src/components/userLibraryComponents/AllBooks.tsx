@@ -27,17 +27,20 @@ const AllBooks: React.FC = () => {
     
     return (
         <>
-            <div className='filter-btn-container'>
-                <Button className='filter-btn' variant='secondary' onClick={() => setArrayName('allUserBooks')}>all</Button>
-                
-                <Button className='filter-btn' variant='secondary' onClick={ updateReading}>reading</Button>
-                
-                <Button className='filter-btn' variant='secondary' onClick={updateFinished}>finished</Button>
-                
-                <Button className='filter-btn' variant='secondary' onClick={updateNotStarted}>not started</Button>
+            <div className='library-nav'>
+                <div>
+                    <Button className='filter-btn' variant='secondary' onClick={() => setArrayName('allUserBooks')}>all</Button>
+                    
+                    <Button className='filter-btn' variant='secondary' onClick={updateNotStarted}>not started</Button>
+                    
+                    <Button className='filter-btn' variant='secondary' onClick={ updateReading}>reading</Button>
+                    
+                    <Button className='filter-btn' variant='secondary' onClick={updateFinished}>finished</Button>
+                    
+                </div>
+                <p>Total ({library[`${arrayName}`].length})</p>
             </div>
-            
-            <p>Total ({library[`${arrayName}`].length})</p>
+                
             <div className='book-list'>
                 {!library[`${arrayName}`] ? 
                 <h1>No Books</h1> : 
