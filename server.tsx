@@ -5,7 +5,7 @@ const libraryRouter = require('./routes/libraryRouter.tsx')
 const userAccountRouter = require('./routes/userAccountRouter.tsx')
 
 //Configurations
-const port = 5000
+const port = process.env.PORT || 5000;
 const app = express()
 app.use(express.json())
 
