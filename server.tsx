@@ -17,11 +17,11 @@ app.put('/bookStatus', controller.bookStatus)
 app.delete('/removeBook', controller.removeBook)
 
 
-// app.use(express.static('client/build'));
-// app.get('*', function (req, res) {
-//     const index = path.join(__dirname, 'client', 'build', 'index.html');
-//     res.sendFile(index);
-//   });
+app.use(express.static('client/build'));
+app.get('*', function (req, res) {
+    const index = path.join(__dirname, 'client', 'build', 'index.html');
+    res.sendFile(index);
+  });
 
 const port = process.env.PORT || 5000;
 
