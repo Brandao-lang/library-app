@@ -13,7 +13,7 @@ const NavDropdown: React.FC = () => {
     const userLogout = () => {
         dispatch({type: 'library/EmptyLibrary'})
         dispatch({type: 'user/LogoutUser'})
-        history.push('/login')
+        history.push('/search')
     }
 
     return (
