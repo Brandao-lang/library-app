@@ -35,9 +35,9 @@ module.exports = {
         
         try {
            await client.connect()
-           const libraryCol = db.collection('library')
+           const userCol = db.collection('user')
             
-            const addToLibrary = await libraryCol.updateOne (
+            const addToLibrary = await userCol.updateOne (
                 {_id: ObjectId(`${userID}`)},
                 {
                     $addToSet: {
@@ -71,16 +71,16 @@ module.exports = {
     
         try {
             await client.connect()
-            const libraryCol = db.collection('library')
+            const userCol = db.collection('user')
     
-            const library = await libraryCol.findOne({
+            const library = await userCol.findOne({
                 _id: ObjectId(`${id}`)
             })
             
             const newArr = [...library.all_books]
             newArr.splice(index, 1)
     
-            const updateLibrary = await libraryCol.updateOne (
+            const updateLibrary = await userCol.updateOne (
                 {_id: ObjectId(`${id}`)},
                 {
                     $set: {
