@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 var {MongoClient}  = require('mongodb')
-var url =  `mongodb+srv://dbAdmin:${process.env.APP_PASS}@book-cluster.96icq.mongodb.net/BOOK-CLUSTER?retryWrites=true&w=majority`
+var url =  process.env.DB_STRING
 var client = new MongoClient(url)
 var db = client.db('BOOK_CLUSTER')
 var ObjectId = require('mongodb').ObjectId;
