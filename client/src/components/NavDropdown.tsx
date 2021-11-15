@@ -1,19 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import { RootState } from '../redux/rootReducer';
 
 const NavDropdown: React.FC = () => {
     const dispatch = useDispatch()
     const loggedIn = useSelector((state:RootState) => state.userInfo.isLoggedIn)
     const user = useSelector((state:RootState) => state.userInfo)
-    const history = useHistory()
     
     const userLogout = () => {
         dispatch({type: 'library/EmptyLibrary'})
         dispatch({type: 'user/LogoutUser'})
-        history.push('/search')
     }
 
     return (
