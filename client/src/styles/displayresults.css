@@ -2,11 +2,22 @@
   display: flex;
   justify-content: space-evenly;
   margin: 30px;
+  align-items: center;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .row img {
   height: 150px;
   width: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 .row img:hover {
@@ -17,15 +28,44 @@
   width: 15%;
 }
 
+.loading-container {
+  margin-top: 220px;
+}
+
+.loading-bar {
+  margin-bottom: 70px;
+}
+
 @media only screen and (max-width: 700px) {
   .row {
     display: block;
     margin: 0 auto;
     width: 100vw;
     text-align: center;
+    padding: 10px;
+  }
+
+  .row img {
+    float: left;
   }
 
   .row h5 {
     width: 100vw;
+  }
+
+  .loading-container {
+    margin-top: 100px;
+  }
+
+  .loading-bar {
+    width: 100vw;
+  }
+
+  .divider {
+    width: 100vw;
+  }
+
+  .results {
+    margin-top: 50px;
   }
 }

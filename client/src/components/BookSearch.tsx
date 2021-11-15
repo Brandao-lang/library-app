@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import '../styles/booksearch.css'
 import { HomePageState } from './Homepage'
-import { Spinner } from 'react-bootstrap'
+import { Alert, Spinner } from 'react-bootstrap'
 
 export interface BookSearchState {
     query: {
@@ -15,18 +15,21 @@ export interface BookSearchState {
 
 interface BookSearchProps {
     updateResults(data: HomePageState['results']):void
+    isLoading: boolean,
+    setIsLoading: (arg0: boolean) => void
 }
 
 export interface AxiosShape {
     data: Array<{
         bookTitle: string, 
-        author:string,
+        author:Array<string>,
         description: string,
         pageCount: number,
         publisher: string, 
         averageRating: number,
         imageLinks:string,
-        publishedDate: string
+        publishedDate: string,
+        id: number
     }>,
     length: number
 }
@@ -35,10 +38,10 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
     const location = useLocation()
     const [query, setQuery] = useState<BookSearchState['query']>({
         title: '',
-        author: ''
+        author: '.'
     })
     const [hasSearched, setHasSearched] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [searchError, setSearchError] = useState(false)
 
     const inputHandler = (e:any):void => {
         setQuery({
@@ -49,7 +52,7 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
 
     const submitHandler = async(e:any) => {
         e.preventDefault()
-        setIsLoading(true)
+        props.setIsLoading(true)
 
         try {
             await axios.get<AxiosShape['data']>('/fetchResults', {
@@ -58,15 +61,17 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
                     author: query.author
                 }
             }).then(res => {
+               setSearchError(false)
                setHasSearched(true)
                props.updateResults(res.data)
             })
 
         } catch (err) {
             console.log(`SEARCH GET failed: ${err}`)
+            setSearchError(true)
 
         } finally {
-            setIsLoading(false)
+            props.setIsLoading(false)
 
         }
     }
@@ -102,18 +107,19 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
                 <input className='form-control'
                         type='text'
                         name='title'
-                        placeholder='Harry Potter...'
+                        placeholder='Title...'
                         onChange={inputHandler}
                 />
                 <input className='form-control'
                         type='text'
                         name='author'
-                        placeholder='J.K Rowling...'
+                        placeholder='Author...'
                         onChange={inputHandler}
                 />
                 <br/>
+                <Alert className={searchError && !hasSearched ? 'results-alert' : 'results-alert-hide'} variant='danger'>No results - please try again</Alert>
                 <button className="btn btn-outline-primary">
-                    {isLoading ? 
+                    {props.isLoading ? 
                     <Spinner 
                         as="span" 
                         animation="border" 
@@ -132,6 +138,7 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
                     </svg>}
                 </button>
             </form>
+          <Alert className={searchError && hasSearched ? 'results-alert-centered' : 'results-alert-centered-hide'} variant='danger'>No results - please try again</Alert>
         </div>
     )
 }

@@ -11,16 +11,15 @@
 .book-list {
   display: flex;
   flex-wrap: wrap;
-  position: absolute;
-  top: 140px;
   align-content: flex-start;
   gap: 10px;
   align-items: baseline;
+  margin-top: 20px;
 }
 
 .book-card {
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #6c757d;
 }
 
 .status-reading {
@@ -38,6 +37,10 @@
 /* library modal styling */
 .modal-box {
   display: flex;
+}
+
+.modal-container img {
+  height: 190px;
 }
 
 .options-container {
@@ -96,5 +99,11 @@
 
   .book-list {
     justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .status-select {
+    width: 80%;
   }
 }

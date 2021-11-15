@@ -6,6 +6,7 @@ import Login from './components/Login';
 import { PageNotFound } from './components/PageNotFound';
 import PrivateRoute from './components/PrivateRoute';
 import Signup from './components/Signup';
+import SignupSuccess from './components/SignupSuccess';
 import UserLibrary from './components/UserLibrary';
 
 
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         }}/>
         <Route exact path='/signup' component={Signup}/>
         <Route exact path='/login' component={Login}/>
+        <Route exact path={'/success'} component={SignupSuccess}/>
         <PrivateRoute path='/my-library' component={UserLibrary}/>
         <Route path='/search' component={Homepage}/>
         <Route component={PageNotFound}/>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
-import { Button } from 'react-bootstrap'
+import { Alert, Button } from 'react-bootstrap'
 import '../../styles/userLibrary.css'
 import LibraryModal from './modals/LibraryModal';
 import { stars } from '../../styles/assets/stars-rating';
@@ -42,16 +42,18 @@ const AllBooks: React.FC = () => {
             </div>
                 
             <div className='book-list'>
-                {!library[`${arrayName}`] ? 
-                <h1>No Books</h1> : 
-                library[`${arrayName}`].map((book: { title: string; image: string | undefined; status: string; rating: number }, index: number) => {
+                {arrayName === 'allUserBooks' && library[`${arrayName}`].length < 1 ? 
+                <Alert variant='secondary'>
+                    No books in this library, <Alert.Link href='/search'>try making a search</Alert.Link> to begin a collection.
+                </Alert> : 
+                library[`${arrayName}`].map((book: { title: string; image: string | undefined; status: string; rating: number, bookID: number }, index: number) => {
                     return <div className='book-card' key={index}>
-                                <LibraryModal index={index} title={book.title} img={book.image} propStatus={book.status} propRating={book.rating} arrayName={arrayName}/>
+                                <LibraryModal index={index} title={book.title} img={book.image} propStatus={book.status} propRating={book.rating} bookID={book.bookID}arrayName={arrayName}/>
                                 <strong className={
                                     book.status === 'Reading' ? 'status-reading' : book.status === 'Finished' ? 'status-finished' : 'status-not-started'
                                 }>{book.status}</strong>
                                 <br/>
-                                {arrayName === 'finishedBooks' ? stars[book.rating] : ''}
+                                {arrayName === 'finishedBooks' ? <p>{stars[book.rating]}</p> : ''}
                             </div>
                         })}
                     </div>

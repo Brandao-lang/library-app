@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import { RootState } from '../redux/rootReducer'
 import '../styles/bookPage.css'
 import { AxiosShape } from './BookSearch'
@@ -17,6 +18,7 @@ const BookPage: React.FC<BookPageProps> = (props) => {
     const book = useSelector((state:RootState) => state.bookInfo)
     const user = useSelector((state:RootState) => state.userInfo)
     const dispatch = useDispatch()
+    const history = useHistory()
     
     const searchAuthor = async() => {
         await axios.get<AxiosShape['data']>('/fetchResults', {
@@ -33,13 +35,19 @@ const BookPage: React.FC<BookPageProps> = (props) => {
     }
 
     const addBook = async() => {
+        if (user.id === 0) {
+            history.push('/login')
+            return
+        }
+        
         setHasClicked(true)
         const selectedBook = {
             title: book.title,
             author: book.author,
             pages: book.pages,
             image: book.image,
-            id: user.id
+            bookID: book.id,
+            userID: user.id
         }
 
         await axios.put('/updateLibrary', selectedBook)
@@ -88,12 +96,13 @@ const BookPage: React.FC<BookPageProps> = (props) => {
             </div>
             <div className='info'>
                 <h1><u>{book.title}</u></h1>
-                <h4 className='display-6' onClick={searchAuthor}>{book.author || 'N/A'}</h4>
+                <h4 className='display-6' onClick={searchAuthor}>{!book.author ? 'N/A' : book.author.join(', ')}</h4>
                 <br/>
-                <h5>Publisher: {book.publisher || 'N/A'}</h5>
-                <h5>Published: {book.publishedDate || 'N/A'}</h5>
-                <h5>Rating: {book.rating} {stars[book.rating] || 'N/A'}</h5>
-                <h5>Page Count: {book.pages || 'N/A'}</h5>
+                <div className='details'>
+                    <h5>Publisher: {book.publisher || 'N/A'}</h5>
+                    <h5>Published: {book.publishedDate || 'N/A'}</h5>
+                    <h5>Rating: {book.rating} {stars[book.rating] || 'N/A'}</h5>
+                    <h5>Page Count: {book.pages || 'N/A'}</h5>
                 <Button
                     className='add-btn-mobile' 
                     variant= {
@@ -121,6 +130,7 @@ const BookPage: React.FC<BookPageProps> = (props) => {
                         <span>Add to library</span>
                     }
                 </Button>
+                </div>
                 <h5 className='desc-text'>Description:</h5>
                 <p>{book.description}</p>
             </div>

@@ -1,22 +1,29 @@
-import axios from 'axios'
 import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import '../styles/signup.css'
+import { Alert } from 'react-bootstrap'
+
 
 interface SignupState {
     signup: {
         username: string,
         email: string,
-        password: string
+        password: string,
+        confirmPassword: string
     }
 }
 
-export default function Signup() {
+const Signup: React.FC = () => {
     const [input, setInput] = useState<SignupState['signup']>({
         username: '',
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: ''
     })
+    const [signupError, setSignupError] = useState(false)
+    const history = useHistory()
 
     const inputHandler = (e:any) => {
         setInput({
@@ -27,16 +34,22 @@ export default function Signup() {
 
     const submitHandler = async(e:any) => {
         e.preventDefault()
-        console.log(input)
         
+        if (input.password !== input.confirmPassword) {
+            setSignupError(true)
+            return
+        }
+
         await axios.post('/signup', input)
         .then(res => {
             console.log(res.data)
             setInput({
                 username: '',
                 email: '',
-                password: ''
+                password: '',
+                confirmPassword: ''
             })
+            history.push('/success')
         
         }).catch (err => {
             console.log(`signup failed: ${err}`)
@@ -70,10 +83,19 @@ export default function Signup() {
                         placeholder='password'
                         onChange={inputHandler}
                     />
+                    <input className='form-control'
+                        type='password'
+                        name='confirmPassword'
+                        placeholder='confirm password'
+                        onChange={inputHandler}
+                    />
                     <br/>
+                    <Alert className={signupError ? 'login-alert-show' : 'login-alert-hide'} variant='danger'>Passwords do not match</Alert>
                     <button className='btn btn-outline-primary'>Confirm</button>
                 </form>
             </div>
         </>
     )
 }
+
+export default Signup

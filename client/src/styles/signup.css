@@ -18,6 +18,27 @@
   margin: 10px;
 }
 
+.success-container {
+  position: absolute;
+  top: 40%;
+  left: 47%;
+  margin-top: -40px;
+  margin-left: -127px;
+}
+
+.success-container svg {
+  height: 10vh;
+  width: auto;
+}
+
+.login-alert-show {
+  display: block;
+}
+
+.login-alert-hide {
+  display: none;
+}
+
 @media only screen and (max-width: 700px) {
   .signup-form {
     width: 70vw;
@@ -26,5 +47,9 @@
   .sign-up-container {
     left: 20%;
     margin-left: -20px;
+  }
+
+  .success-container {
+    margin-left: -105px;
   }
 }

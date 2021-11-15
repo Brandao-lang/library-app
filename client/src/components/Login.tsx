@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Alert } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -17,6 +18,7 @@ export default function Login() {
         email: '',
         password: ''
     })
+    const [loginError, setLoginError] = useState(false)
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -47,6 +49,7 @@ export default function Login() {
         
         }).catch (err => {
             console.log(`login failed: ${err}`)
+            setLoginError(true)
         })
     }
 
@@ -71,6 +74,10 @@ export default function Login() {
                         placeholder='password'
                         onChange={inputHandler}
                     />
+                    <br/>
+                    <Alert className={loginError ? 'login-alert-show' : 'login-alert-hide'} variant='danger'>Incorrect username or password</Alert>
+                    <Link to='/signup'>register an account</Link>
+                    <br/>
                     <br/>
                     <button className='btn btn-outline-primary'>login</button>
                 </form>

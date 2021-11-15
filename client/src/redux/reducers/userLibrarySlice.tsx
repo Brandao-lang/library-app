@@ -1,35 +1,39 @@
 interface userLibraryState {
     allUserBooks:  Array<{
         title: string,
-        author: string,
+        author: Array<string>,
         pages: number
         image: string,
         status: string,
-        rating: number 
+        rating: number
+        id: number 
     }>,
     readingBooks: Array<{
         title: string,
-        author: string,
+        author: Array<string>,
         pages: number
         image: string,
         status: string,
-        rating: number 
+        rating: number
+        id: number 
     }>,
     notStartedBooks: Array<{
         title: string,
-        author: string,
+        author: Array<string>,
         pages: number
         image: string,
         status: string,
-        rating: number 
+        rating: number
+        id: number 
     }>,
     finishedBooks: Array<{
         title: string,
-        author: string,
+        author: Array<string>,
         pages: number
         image: string,
         status: string,
-        rating: number 
+        rating: number
+        id: number 
     }>,
 }
 
@@ -51,7 +55,8 @@ export default function userLibrarySlice(state=initialState, action:any) {
                         pages: action.payload.pages,
                         image: action.payload.image,
                         status: 'Not Started',
-                        rating: 0
+                        rating: 0,
+                        id: action.payload.bookID
                     }]
             }
         }
@@ -59,36 +64,30 @@ export default function userLibrarySlice(state=initialState, action:any) {
         case 'library/removeBook': {
             let allBooksArr = [...state.allUserBooks]
             
-            const title:string  = action.payload.title
-          
-            const find = (book: { title: string }) => book.title === title
-
-            const index = allBooksArr.findIndex(find)
-
-            if (allBooksArr[index].status === 'Reading') {
+            if (allBooksArr[action.payload.topIndex].status === 'Reading') {
                 const readingBooksArr = [...state.readingBooks]
                 readingBooksArr.splice(action.payload.index, 1)
-                allBooksArr.splice(index, 1)
+                allBooksArr.splice(action.payload.topIndex, 1)
 
                 return {
                     ...state, 
                         allUserBooks: allBooksArr,
                         readingBooks: readingBooksArr
                 }
-            } else if (allBooksArr[index].status === 'Finished') {
+            } else if (allBooksArr[action.payload.topIndex].status === 'Finished') {
                 const finishedBooksArr = [...state.finishedBooks]
                 finishedBooksArr.splice(action.payload.index, 1)
-                allBooksArr.splice(index, 1)
+                allBooksArr.splice(action.payload.topIndex, 1)
 
                 return {
                     ...state, 
                         allUserBooks: allBooksArr,
                         finishedBooks: finishedBooksArr
                 } 
-            } else if (allBooksArr[index].status === 'Not Started') {
+            } else if (allBooksArr[action.payload.topIndex].status === 'Not Started') {
                 const notStartedBooksArr = [...state.notStartedBooks]
                 notStartedBooksArr.splice(action.payload.index, 1)
-                allBooksArr.splice(index, 1)
+                allBooksArr.splice(action.payload.topIndex, 1)
 
                 return {
                     ...state, 
@@ -122,18 +121,9 @@ export default function userLibrarySlice(state=initialState, action:any) {
         }
         case 'library/updateBook' : {
             const allBooksArr = [...state.allUserBooks]
-
-            // this is a temp solution, we are finding the index in the original array based on the title of the book...this is easily prone to errors with two books that have the same title
             
-            const title:string  = action.payload.title
-            
-            const find = (book: { title: string }) => book.title === title
-            
-            const i = allBooksArr.findIndex(find)
-
-            
-            allBooksArr[i].status = action.payload.status
-            allBooksArr[i].rating = action.payload.rating
+            allBooksArr[action.payload.topIndex].status = action.payload.status
+            allBooksArr[action.payload.topIndex].rating = action.payload.rating
             
             return {
                ...state, 

@@ -1,23 +1,25 @@
 interface bookInfoState {
     title: string,
-    author: string,
+    author: Array<string>,
     publisher: string,
     publishedDate: string,
     rating: string,
     pages: number,
     image: string,
-    description: string
+    description: string,
+    id: number
 }
 
 const initialState: bookInfoState = {
     title: 'N/A',
-    author: 'N/A',
+    author: [],
     publisher: 'N/A',
     publishedDate: 'N/A',
     rating: 'N/A',
     pages: 0,
     image: 'N/A',
-    description: 'N/A'
+    description: 'N/A',
+    id: 0
 }
 
 export default function bookInfoSlice(state=initialState, action:any) {
@@ -32,7 +34,8 @@ export default function bookInfoSlice(state=initialState, action:any) {
                     rating: action.payload.averageRating,
                     pages: action.payload.pageCount,
                     image: action.payload.imageLinks,
-                    description: action.payload.description
+                    description: action.payload.description,
+                    id: action.payload.id
             }
         }
         default:

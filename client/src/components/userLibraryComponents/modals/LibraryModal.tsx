@@ -19,10 +19,11 @@ interface LibraryModalProps {
   index: number,
   propStatus: string,
   propRating: number,
+  bookID: number,
   arrayName: string
 }
 
-const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatus, propRating, arrayName}) => {
+const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatus, propRating, bookID, arrayName}) => {
     const dispatch = useDispatch()
     const userID = useSelector((state:RootState) => state.userInfo.id)
     const library = useSelector((state: RootState) => state.userLibrary.allUserBooks)
@@ -32,7 +33,7 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatu
       rating: 0
     })
     
-    const topIndex = library.findIndex((book: { title: string }) => book.title === title)
+    const topIndex = library.findIndex((book: { bookID: number }) => book.bookID === bookID)
 
     const handleClose = () => setShow(false) 
     const handleShow = () => setShow(true)
@@ -65,19 +66,24 @@ const LibraryModal: React.FC<LibraryModalProps> = ({title, img, index, propStatu
           title
       }
 
-      dispatch({type:'library/updateBook', payload: update})
+      dispatch({type:'library/updateBook', payload: update, topIndex})
       checkArray(arrayName)
 
       try {
         await axios.put('/bookStatus', update)
+
       } 
       catch (err) {
         console.log(`book status change failed: ${err}`)
+
+      } finally {
+        handleClose()
+        
       }
     }
 
     const deleteBook = async(index: number, topIndex:number) => {
-      dispatch({type: 'library/removeBook', payload: {index, title}})
+      dispatch({type: 'library/removeBook', payload: {index, topIndex}})
       checkArray(arrayName)
       
       await axios.delete('/removeBook', {

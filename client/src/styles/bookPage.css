@@ -12,6 +12,8 @@
   display: flex;
   width: 60vw;
   margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .info {
@@ -19,9 +21,27 @@
   padding-left: 5%;
 }
 
+.details {
+  width: 30%;
+  padding: 15px;
+  border: 1px solid #dee2e6;
+  box-shadow: 10px 5px 5px #ced4da;
+}
+
+.info p {
+  height: 40vh;
+  overflow: auto;
+  padding: 15px;
+  border: 1px solid #dee2e6;
+  box-shadow: 10px 5px 5px #ced4da;
+}
+
 .details-container img {
   height: 25rem;
   float: left;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 .add-btn-mobile {
@@ -32,16 +52,20 @@
   margin-top: 50px;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1500px) {
   .details-container {
     width: 90vw;
+  }
+
+  .details {
+    width: 50%;
   }
 }
 
 @media only screen and (max-width: 700px) {
   .details-container {
     position: absolute;
-    top: 20%;
+    top: 27%;
     display: block;
     width: 90vw;
     margin: 0 auto;
@@ -50,6 +74,10 @@
   .info {
     text-align: left;
     padding-left: 5%;
+  }
+
+  .info p {
+    height: 70vh;
   }
 
   .details-container img {
@@ -66,6 +94,11 @@
   }
 
   .desc-text {
-    margin-top: 100px;
+    margin-top: 50px;
+  }
+
+  .details {
+    height: 35vh;
+    width: 70vw;
   }
 }
