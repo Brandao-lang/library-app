@@ -35,7 +35,7 @@ module.exports = {
         
         try {
            await client.connect()
-           const userCol = db.collection('user')
+           const userCol = db.collection('users')
             
             const addToLibrary = await userCol.updateOne (
                 {_id: ObjectId(`${userID}`)},
@@ -71,7 +71,7 @@ module.exports = {
     
         try {
             await client.connect()
-            const userCol = db.collection('user')
+            const userCol = db.collection('users')
     
             const library = await userCol.findOne({
                 _id: ObjectId(`${id}`)
@@ -106,9 +106,9 @@ module.exports = {
     
         try {
             await client.connect()
-            const libraryCol = db.collection('library')
+            const userCol = db.collection('users')
 
-            await libraryCol.updateOne(
+            await userCol.updateOne(
                 {_id: ObjectId(`${userID}`)},
                 
                 {
@@ -139,7 +139,6 @@ module.exports = {
         try {
             await client.connect()
             const userCol = db.collection('users')
-            const libraryCol = db.collection('library')
 
             let userDocument = {
                 "name" : `${username}`,
@@ -150,15 +149,6 @@ module.exports = {
             
             await userCol.insertOne(userDocument)
             
-            const userID = await userCol.findOne({email})
-            
-            let libraryDocument = {
-                "id": userID._id,
-                "all_books" : []
-            }
-            
-            await libraryCol.insertOne(libraryDocument)
-        
         } catch (err) {
             console.log(`user signup api failed: ${err}`)
         
