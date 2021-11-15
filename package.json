@@ -2,7 +2,6 @@
   "name": "book-app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"  },
@@ -17,5 +16,6 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.0"
-  }
+  },
+  "main": "server.tsx"
 }
