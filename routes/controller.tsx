@@ -13,13 +13,13 @@ module.exports = {
     
         try {
             await client.connect()
-            const libraryCol = db.collection('library')
+            const userCol = db.collection('users')
     
-            const library = await libraryCol.findOne({
+            const library = await userCol.findOne({
                 _id: ObjectId(`${id}`)
             })
             
-            response.status(200).send(library)
+            response.status(200).send(library.all_books)
     
         } catch (err) {
             console.log(`get library API failed: ${err}`)
