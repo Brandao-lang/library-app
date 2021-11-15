@@ -133,7 +133,7 @@ export default function userLibrarySlice(state=initialState, action:any) {
         case 'library/getLibrary': {
             return {
                 ...state, 
-                    allUserBooks: action.payload.all_books
+                    allUserBooks: action.payload
             }
         }
         case 'library/EmptyLibrary': {
