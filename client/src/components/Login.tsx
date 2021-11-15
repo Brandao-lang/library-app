@@ -61,7 +61,7 @@ export default function Login() {
             </Link>
             <div className='sign-up-container'>
                 <h1>Login</h1>
-                <form className='signup-form'>
+                <form className='signup-form' onSubmit={submitHandler}>
                 <input className='form-control'
                         type='text'
                         name='email'
@@ -79,7 +79,7 @@ export default function Login() {
                     <Link to='/signup'>register an account</Link>
                     <br/>
                     <br/>
-                    <button className='btn btn-outline-primary' onClick={submitHandler}>login</button>
+                    <button className='btn btn-outline-primary'>login</button>
                 </form>
             </div>
         </>

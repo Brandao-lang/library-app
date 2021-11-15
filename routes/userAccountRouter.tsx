@@ -47,6 +47,10 @@ module.exports = {
     login: async(request, response) => {
         const email = request.query.email
         const password = request.query.password
+
+        if (!password) {
+            return response.status(400).send('password failed')
+        }
     
         try {
             await client.connect()
