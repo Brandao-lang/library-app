@@ -151,8 +151,8 @@ module.exports = {
             const userID = await userCol.findOne({email})
 
             let libraryDocument = {
-                "_id": userID._id,
-                "all_books" : [],
+                "id": userID._id,
+                "all_books" : []
             }
     
             await libraryCol.insertOne(libraryDocument)
