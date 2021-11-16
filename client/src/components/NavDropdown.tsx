@@ -31,7 +31,7 @@ const NavDropdown: React.FC = () => {
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a className="dropdown-item" href='/my-library/all-books'>My Library</a></li>
-                        <li><a className="dropdown-item" onClick={userLogout} href='/Login'>Logout</a></li>
+                        <li><a className="dropdown-item" onClick={userLogout} href='/search'>Logout</a></li>
                     </ul>
             </div>}
         </>
