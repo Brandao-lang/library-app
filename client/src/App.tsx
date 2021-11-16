@@ -20,7 +20,7 @@ const App: React.FC = () => {
           )
         }}/>
         <Route exact path='/signup' component={Signup}/>
-        <Route exact path='/login' component={Login}/>
+        <Route exact path='/Login' component={Login}/>
         <Route exact path={'/success'} component={SignupSuccess}/>
         <PrivateRoute path='/my-library' component={UserLibrary}/>
         <Route path='/search' component={Homepage}/>

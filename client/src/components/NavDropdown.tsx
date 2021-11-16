@@ -20,7 +20,7 @@ const NavDropdown: React.FC = () => {
                     <Link to='/signup'>
                     <button type="button" className="btn btn-secondary">Signup</button>
                     </Link>
-                    <Link to='/login'>
+                    <Link to='/Login'>
                     <button type="button" className="btn btn-secondary">Login</button>
                     </Link>
                 </div> : 
@@ -31,7 +31,7 @@ const NavDropdown: React.FC = () => {
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a className="dropdown-item" href='/my-library/all-books'>My Library</a></li>
-                        <li><a className="dropdown-item" onClick={userLogout} href='/login'>Logout</a></li>
+                        <li><a className="dropdown-item" onClick={userLogout} href='/Login'>Logout</a></li>
                     </ul>
             </div>}
         </>
