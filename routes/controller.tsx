@@ -170,10 +170,6 @@ module.exports = {
     
             const user = await userCol.findOne({
                 email
-            }).then(res => 
-                console.log(res)
-            ).catch (err => {
-                return err
             })
 
             const verify = bcrypt.compareSync(password, user.password)
