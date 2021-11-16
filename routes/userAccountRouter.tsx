@@ -1,5 +1,5 @@
 var { MongoClient } = require('mongodb')
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcryptjs')
 var url =  process.env.DB_STRING
 var client = new MongoClient(url)
 var db = client.db('BOOK_CLUSTER')
