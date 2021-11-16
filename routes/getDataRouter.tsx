@@ -6,7 +6,7 @@ module.exports = {
         let author = request.query.author
         const apiArr = []
 
-        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APIKEY}`
+        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${author}&filter=ebooks&maxResults=40&key=${process.env.APP_APIKEY}`
         ).then(res => {
             if(!res.data) {
                 response.status(400).send('no results')
