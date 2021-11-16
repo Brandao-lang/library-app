@@ -61,6 +61,8 @@ Each book is uniquely identified by an ISBN code provided by the Google Books AP
 
 ![GettingStarted](./demoImages/Animation1.gif)
 
-<!-- ![GettingStarted](./demoImages/Animation2.gif) -->
+![GettingStarted](./demoImages/Animation2.gif)
 
 ![GettingStarted](./demoImages/mobileSS1.png)
+
+![GettingStarted](./demoImages/mobileSS2.png)
