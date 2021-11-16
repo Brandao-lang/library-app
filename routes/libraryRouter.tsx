@@ -10,13 +10,13 @@ module.exports = {
     
         try {
             await client.connect()
-            const libraryCol = db.collection('library')
+            const userCol = db.collection('users')
     
-            const library = await libraryCol.findOne({
+            const library = await userCol.findOne({
                 _id: ObjectId(`${id}`)
             })
             
-            response.status(200).send(library)
+            response.status(200).send(library.all_books)
     
         } catch (err) {
             console.log(`get library API failed: ${err}`)
@@ -32,9 +32,9 @@ module.exports = {
         
         try {
            await client.connect()
-           const libraryCol = db.collection('library')
+           const userCol = db.collection('users')
             
-            const addToLibrary = await libraryCol.updateOne (
+            const addToLibrary = await userCol.updateOne (
                 {_id: ObjectId(`${userID}`)},
                 {
                     $addToSet: {
@@ -68,16 +68,16 @@ module.exports = {
     
         try {
             await client.connect()
-            const libraryCol = db.collection('library')
+            const userCol = db.collection('users')
     
-            const library = await libraryCol.findOne({
+            const library = await userCol.findOne({
                 _id: ObjectId(`${id}`)
             })
             
             const newArr = [...library.all_books]
             newArr.splice(index, 1)
     
-            const updateLibrary = await libraryCol.updateOne (
+            const updateLibrary = await userCol.updateOne (
                 {_id: ObjectId(`${id}`)},
                 {
                     $set: {
@@ -103,9 +103,9 @@ module.exports = {
     
         try {
             await client.connect()
-            const libraryCol = db.collection('library')
+            const userCol = db.collection('users')
 
-            await libraryCol.updateOne(
+            await userCol.updateOne(
                 {_id: ObjectId(`${userID}`)},
                 
                 {
@@ -125,5 +125,5 @@ module.exports = {
         }
 
         response.status(200).send('ok')
-    },
+    }
 }

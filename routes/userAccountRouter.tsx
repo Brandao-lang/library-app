@@ -6,7 +6,7 @@ var db = client.db('BOOK_CLUSTER')
 var ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
-     signup: async(request, response) => {
+    signup: async(request, response) => {
         const { username, email, password } = request.body
         
         const hashed = bcrypt.hashSync(password, 10)
@@ -14,24 +14,16 @@ module.exports = {
         try {
             await client.connect()
             const userCol = db.collection('users')
-            const libraryCol = db.collection('library')
 
             let userDocument = {
                 "name" : `${username}`,
                 "email" : `${email}`,
-                "password" : `${hashed}`
+                "password" : `${hashed}`,
+                "all_books": []
             }
+            
             await userCol.insertOne(userDocument)
-
-            const userID = await userCol.findOne({email})
-
-            let libraryDocument = {
-                "_id": userID._id,
-                "all_books" : [],
-            }
-    
-            await libraryCol.insertOne(libraryDocument)
-        
+            
         } catch (err) {
             console.log(`user signup api failed: ${err}`)
         
@@ -71,5 +63,5 @@ module.exports = {
         } finally {
             await client.close()
         }
-    },
+    }
 }
