@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb')
 const axios = require('axios')
-var bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs')
 
 const url =  process.env.DB_STRING
 const client = new MongoClient(url)
@@ -25,7 +25,7 @@ module.exports = {
             console.log(`get library API failed: ${err}`)
     
         } finally {
-            client.close()
+            await client.close()
     
         }
     },
@@ -60,7 +60,7 @@ module.exports = {
             console.log(`update library api failed: ${err}`)
     
         } finally {
-            client.close()
+            await client.close()
     
         }
     },
@@ -95,7 +95,7 @@ module.exports = {
             console.log(`remove book API failed: ${err}`)
     
         } finally {
-            client.close()
+            await client.close()
     
         }
         
@@ -123,7 +123,7 @@ module.exports = {
             console.log(`book status api failed : ${err}`)
 
         } finally {
-            client.close()
+            await client.close()
         
         }
 
@@ -153,7 +153,7 @@ module.exports = {
             console.log(`user signup api failed: ${err}`)
         
         } finally {
-            client.close()
+            await client.close()
 
         }
     
@@ -186,7 +186,7 @@ module.exports = {
             return response.status(400).send('login failed')
         
         } finally {
-            client.close()
+            await client.close()
         }
     },
     

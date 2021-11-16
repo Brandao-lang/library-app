@@ -11,7 +11,6 @@ const AllBooks: React.FC = () => {
     const [arrayName, setArrayName] = useState<'allUserBooks' | 'readingBooks' | 'notStartedBooks' | 'finishedBooks'>('allUserBooks')
     const library = useSelector((state: RootState) => state.userLibrary)
     const dispatch = useDispatch()
-    console.log(library)
 
     const updateReading = () => {
         dispatch({type:'library/readingFilter'})

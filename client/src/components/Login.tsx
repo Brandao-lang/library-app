@@ -39,7 +39,6 @@ export default function Login() {
             }
         } )
         .then(res => {
-            console.log(res.data)
             dispatch({type: 'user/LoginUser', payload: res.data})
             setInput({
                 email: '',

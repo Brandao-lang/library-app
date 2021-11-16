@@ -19,7 +19,6 @@ export default function UserLibrary() {
                 }
             })
             .then(res => {
-                console.log(res.data)
                 dispatch({type:'library/getLibrary', payload: res.data})
 
             }).catch(err => {
