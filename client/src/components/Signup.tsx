@@ -23,6 +23,7 @@ const Signup: React.FC = () => {
         confirmPassword: ''
     })
     const [signupError, setSignupError] = useState(false)
+    const [missingFieldError, setMissingFieldError] = useState(false)
     const history = useHistory()
 
     const inputHandler = (e:any) => {
@@ -37,6 +38,9 @@ const Signup: React.FC = () => {
         
         if (input.password !== input.confirmPassword) {
             setSignupError(true)
+            return
+        } else if (input.username === '' || input.password === '') {
+            setMissingFieldError(true)
             return
         }
 
@@ -91,6 +95,7 @@ const Signup: React.FC = () => {
                     />
                     <br/>
                     <Alert className={signupError ? 'login-alert-show' : 'login-alert-hide'} variant='danger'>Passwords do not match</Alert>
+                    <Alert className={missingFieldError ? 'login-alert-show' : 'login-alert-hide'} variant='danger'>Username and password is required</Alert>
                     <button className='btn btn-outline-primary'>Confirm</button>
                 </form>
             </div>
