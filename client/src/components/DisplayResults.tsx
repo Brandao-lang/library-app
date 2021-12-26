@@ -30,7 +30,7 @@ const DisplayResults: React.FC<DisplayResultsProps> = (props) => {
                     return  <div key={index}>
                             <div className='row'>
                                 <img onClick={() => bookSelect(result)}src={result.imageLinks || 'N/A'} alt='cover-art' />
-                                <h5>{result.bookTitle || 'N/A'}</h5>
+                                <h5 onClick={() => bookSelect(result)}>{result.bookTitle || 'N/A'}</h5>
                                 <h5>{!result.author ? 'N/A' : result.author.join(', ')}</h5>
                                 <h5>{stars[result.averageRating] || 'N/A'}</h5>
                                 <h5>{result.publishedDate || 'N/A'}</h5>

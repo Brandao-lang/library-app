@@ -118,7 +118,10 @@ const BookSearch:React.FC<BookSearchProps> = (props) => {
                 />
                 <br/>
                 <Alert className={searchError && !hasSearched ? 'results-alert' : 'results-alert-hide'} variant='danger'>No results - please try again</Alert>
-                <button className="btn btn-outline-primary">
+                <button 
+                className="btn btn-outline-primary"
+                data-cy='search'
+                >
                     {props.isLoading ? 
                     <Spinner 
                         as="span" 
